@@ -105,6 +105,7 @@ int main(void)
 			clock_t end{ 0 };//结束时间
 			int res{ 0 };//返回值，有解1，无解-1
 			int literalNum{ -1 };//文字数量
+			char resultName[500];//结果路径
 
 			//核心代码
 			literalNum = s.read(fileName);//读取文件
@@ -121,14 +122,15 @@ int main(void)
 				time = (double)(end - start) / CLOCKS_PER_SEC * 1000.0;
 				s.write(time, literalNum, fileName);
 			}
-
-
-			if (res == 1) {
-				for (int i = 0; i < 8; i++)
-					for (int j = 0; j < 8; j++)
-						board[i][j] = s.model[index(i, j)];
+			for (int i{ 0 }; i < strlen(fileName); i++)
+			{
+				resultName[i] = fileName[i];
 			}
-			//showboard();
+			length = strlen(fileName);
+			resultName[strlen(resultName) - 1] = 's';
+			resultName[strlen(resultName) - 2] = 'e';
+			resultName[strlen(resultName) - 3] = 'r';
+			showShuDu(resultName);
 		}
 		else if (choice == 3)//蜂窝数独
 		{

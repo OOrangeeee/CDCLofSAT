@@ -123,7 +123,7 @@ void createStartinggrid(const int a[][COL], int b[][COL], int numDigits)
 	delete[] c;
 }
 
-void print(const int a[][COL],string shuduPath)
+void print(const int a[][COL], string shuduPath)
 {
 	int i, j;
 	shuduPath.erase(shuduPath.size() - 3);
@@ -225,7 +225,7 @@ string createSudokuToFile()
 	shuduPath = shuduPath + "\\" + shuDuName;
 	createSudoku(sudoku);//生成数独终盘
 	createStartinggrid(sudoku, starting_grid, holes);//生成初盘
-	print(starting_grid,shuduPath);//输出初盘
+	print(starting_grid, shuduPath);//输出初盘
 	//转化为cnf文件
 	string filename = ToCnf(starting_grid, holes, shuduPath);
 	return filename;
@@ -234,6 +234,7 @@ string createSudokuToFile()
 void showShuDu(char fileName[])
 {
 	string resultName = fileName;
+	int temp[1000];
 	ifstream out(resultName);
 	if (!out.is_open())
 	{
@@ -242,5 +243,66 @@ void showShuDu(char fileName[])
 	}
 	string x;
 	getline(out, x);
-
+	out.get();
+	if (x[2] == '1')
+	{
+		int num{ 1 };
+		int k{ 0 };
+		bool ifFalse{ false };
+		while (1)
+		{
+			char c = out.get();
+			if (c == ' ')
+			{
+				if (ifFalse)
+				{
+					temp[num++] = 0 - k;
+				}
+				else
+				{
+					temp[num] = k;
+				}
+				if (k == 999)
+				{
+					break;
+				}
+				k = 0;
+				ifFalse = false;
+			}
+			else if (c >= '0' && c <= '9')
+			{
+				k = (c - '0') + k * 10;
+			}
+			else if (c == '-')
+			{
+				ifFalse = true;
+			}
+		}
+		string solutionName = fileName;
+		solutionName.erase(solutionName.size() - 3);
+		solutionName += "txt";
+		ofstream in(solutionName);
+		if (!in.is_open())
+		{
+			cout << "文件写入失败\n";
+			return;
+		}
+		int count{ 0 };//计数器
+		for (int i{ 1 }; i <= 999; i++)
+		{
+			if (temp[i] > 0)
+			{
+				in << temp[i] << " ";
+				count++;
+			}
+			if (count % 9 == 0)
+			{
+				in << endl;
+			}
+		}
+	}
+	else
+	{
+		cout << "该数独无解！（可能是我的生成数独部分有误T_T）" << endl;
+	}
 }

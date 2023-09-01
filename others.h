@@ -17,3 +17,4 @@ string ToCnf(int a[][COL], int holes, string shuduPath);
 void randomFirstRow(int a0[], int n);
 int Digit(int a[][COL], int i, int j);
 int index(int i, int j);
+void showShuDu(char fileName[]);
