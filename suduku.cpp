@@ -155,7 +155,7 @@ string ToCnf(int a[][COL], int holes, string shuduPath)
 		cout << "无法打开文件\n";
 		exit;
 	}
-	in << "p" << " " << "cnf" << " " << 729 << " " << 8829 + 81 - holes << endl;
+	in << "p" << " " << "cnf" << " " << 999 << " " << 8829 + 81 - holes << endl;
 	//单子句
 	for (int x = 0; x < ROW; ++x) {
 		for (int y = 0; y < COL; ++y)
@@ -231,34 +231,16 @@ string createSudokuToFile()
 	return filename;
 }
 
-//void SudokuShow(conse* result, int VARNUM)
-//{
-//	int res[9][9] = { 0 };
-//	string shuduPath = "E:\\test\\shusuShengCheng\\ShuDuSolution.txt";
-//	ofstream fos(shuduPath);//定义输入文件
-//	if (!fos.is_open())
-//	{
-//		cout << "无法打开文件\n";
-//		exit;
-//	}
-//	for (int i = 0; i < VARNUM; ++i)
-//	{
-//		if (result[i].value == TRUE)
-//		{
-//			int x = (int)(abs(result[i].num) / 100) - 1;
-//			int y = (int)((abs(result[i].num) - (x + 1) * 100) / 10) - 1;
-//			res[x][y] = abs(result[i].num) - (x + 1) * 100 - (y + 1) * 10;
-//		}
-//	}
-//	//输出result数组
-//	for (int i = 0; i < 9; ++i)
-//	{
-//		for (int j = 0; j < 9; ++j)
-//		{
-//			cout << res[i][j] << " ";
-//			fos << res[i][j] << " ";
-//		}
-//		cout << endl;
-//		fos << endl;
-//	}
-//}
+void showShuDu(char fileName[])
+{
+	string resultName = fileName;
+	ifstream out(resultName);
+	if (!out.is_open())
+	{
+		cout << "文件名错误\n";
+		return;
+	}
+	string x;
+	getline(out, x);
+
+}
