@@ -129,18 +129,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="hanidoku.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ResParser.cpp" />
     <ClCompile Include="Start.cpp" />
-    <ClCompile Include="suduku.cpp" />
+    <ClCompile Include="Sudoku.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DPLLsolver.h" />
     <ClInclude Include="others.h" />
     <ClInclude Include="structure.h" />
-    <ClInclude Include="suduku.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

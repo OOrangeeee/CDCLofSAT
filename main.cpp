@@ -1,4 +1,11 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+﻿/*最后编辑：*/
+/*晋晨曦 2023.9.3 3:46*/
+/*qq：2950171570*/
+/*email：Jin0714@outlook.com  回复随缘*/
+
+
+
+#define _CRT_SECURE_NO_WARNINGS
 #include"DPLLsolver.h"
 #include"others.h"
 int main(void)
@@ -89,7 +96,7 @@ int main(void)
 			//创建数独
 			string filename;
 			char fileName[500];
-			int i{ 0 };
+			int i{ 0 };//循环变量
 			int k{ 0 };
 			filename = createSudokuToFile();
 			for (; i <= filename.size(); i++)
@@ -122,19 +129,54 @@ int main(void)
 				time = (double)(end - start) / CLOCKS_PER_SEC * 1000.0;
 				s.write(time, literalNum, fileName);
 			}
-			for (int i{ 0 }; i < strlen(fileName); i++)
-			{
+			/*for (i = 0; i < strlen(fileName); i++)
 				resultName[i] = fileName[i];
-			}
-			length = strlen(fileName);
-			resultName[strlen(resultName) - 1] = 's';
-			resultName[strlen(resultName) - 2] = 'e';
-			resultName[strlen(resultName) - 3] = 'r';
-			showShuDu(resultName);
+			resultName[i] = '\0';
+			length = strlen(resultName);
+			resultName[length - 1] = 's';
+			resultName[length - 2] = 'e';
+			resultName[length - 3] = 'r';*/
+			showShuDu(fileName);
 		}
 		else if (choice == 3)//蜂窝数独
 		{
+			int res{ 0 };//返回值，有解1，无解-1  
+			do 
+			{
+				//数独盘
+				int hanidoku[ROW][COL];
+				//创建原始终盘文件
+				string hanidokuFileName = CreateHanidoku(hanidoku);
+				//处理文件名
+				char fileName[500];
+				int i{ 0 };
+				for (; i < hanidokuFileName.size(); i++)
+					fileName[i] = hanidokuFileName[i];
+				fileName[i] = '\0';
+				//解出数独文件，生成终盘
+				Solver s;//生成类   
+				int literalNum{ -1 };//文字数量   
+				long long int time{ 0 };//时间 
+				clock_t start{ 0 };//开始时间 
+				clock_t end{ 0 };//结束时间 
 
+				//核心代码
+				literalNum = s.read(fileName);//读取文件 
+				if (literalNum == -1)
+				{
+					res = -2;
+					s.write(0, literalNum, fileName);
+				}
+				else
+				{
+					start = clock();
+					res = s.solve();
+					end = clock();
+					time = (double)(end - start) / CLOCKS_PER_SEC * 1000.0;
+					s.write(time, literalNum, fileName);
+				}
+			} while (res != 1);
+			
 		}
 		else if (choice == 0)//退出程序
 		{

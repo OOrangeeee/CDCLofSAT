@@ -1,3 +1,10 @@
+/*×îºó±à¼­£º*/
+/*½ú³¿êØ 2023.9.3 3:46*/
+/*qq£º2950171570*/
+/*email£ºJin0714@outlook.com  »Ø¸´ËæÔµ*/
+
+
+
 #include"others.h"
 void Start()
 {

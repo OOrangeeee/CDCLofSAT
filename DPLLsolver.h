@@ -1,3 +1,11 @@
+/*最后编辑：*/
+/*晋晨曦 2023.9.3 3:46*/
+/*qq：2950171570*/
+/*email：Jin0714@outlook.com  回复随缘*/
+
+
+
+#pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #include "structure.h"
 //最关键的解决类，封装了基本上所有需要的函数和成员参数
@@ -12,7 +20,7 @@ public:
 	double cla_inc{ 1 };       //子句活跃度增量
 	double cla_decay{ -1 };     //子句活跃的衰减量
 	int literalNum{ -1 };           //文字数量
-	int clauseNum{-1};            //子句数量
+	int clauseNum{ -1 };            //子句数量
 
 	//变量顺序
 	double* activity;     //通过启发式方法来衡量变量活跃度
@@ -36,25 +44,25 @@ public:
 	int model_size{ 0 };
 
 	//辅助函数
-	int nVars() 
-	{ 
-		return this->literalNum; 
+	int nVars()
+	{
+		return this->literalNum;
 	}
-	int nAssigns() 
-	{ 
-		return trail.size(); 
+	int nAssigns()
+	{
+		return trail.size();
 	}
-	int nConstraints() 
-	{ 
-		return this->clauseNum; 
+	int nConstraints()
+	{
+		return this->clauseNum;
 	}
-	int nLearnts() 
-	{ 
-		return learnts.size(); 
+	int nLearnts()
+	{
+		return learnts.size();
 	}
-	int decisionLevel() 
-	{ 
-		return trail_lim.size(); 
+	int decisionLevel()
+	{
+		return trail_lim.size();
 	}
 	//传播函数
 	Clause* propagate()
@@ -555,7 +563,6 @@ public:
 		}
 		for (int i = 0; i < clauseNum; i++)//读入并且初始化活跃度，有一个就+1*var_inc
 		{
-			//fgets(s,200,f);
 			Clause* V = new Clause;
 			while (1)
 			{
@@ -673,9 +680,9 @@ bool Clause::Clause_new(Solver& S, mVector<lit> ps, bool learnt, Clause*& out_cl
 }
 
 //判断语句是不是单位语句，仅限学习语句
-bool Clause::locked(Solver S) 
-{ 
-	return S.reason[this->lits[0].var()] == this; 
+bool Clause::locked(Solver S)
+{
+	return S.reason[this->lits[0].var()] == this;
 }
 //删除所有未被赋值的语句
 bool Clause::simplify(Solver& S)

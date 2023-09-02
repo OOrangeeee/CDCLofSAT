@@ -1,10 +1,17 @@
+/*最后编辑：*/
+/*晋晨曦 2023.9.3 3:46*/
+/*qq：2950171570*/
+/*email：Jin0714@outlook.com  回复随缘*/
+
+
+
 #include"others.h"
 void ShowTheRes(char filePath[])
 {
 	int x{ 0 };
 	cout << "\n你是否想查看结果内容？\n1. YES   2. NO\n请输入:_\b";
 	cin >> x;
-	if (x)
+	if (x == 1)
 	{
 		system("cls");
 		cout << "--------------------------------------\n";

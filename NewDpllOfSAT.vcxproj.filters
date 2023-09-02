@@ -24,7 +24,10 @@
     <ClCompile Include="ResParser.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="suduku.cpp">
+    <ClCompile Include="Sudoku.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="hanidoku.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -33,9 +36,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="structure.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="suduku.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="others.h">

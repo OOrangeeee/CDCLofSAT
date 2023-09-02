@@ -1,6 +1,13 @@
+/*最后编辑：*/
+/*晋晨曦 2023.9.3 3:46*/
+/*qq：2950171570*/
+/*email：Jin0714@outlook.com  回复随缘*/
+
+
+
 #include "others.h"
-#define CORRECT 0
-#define WRONG -1
+const int CORRECT{ 520 };
+const int WRONG{ 521 };
 static int T = 0;
 
 int index(int i, int j)
@@ -8,7 +15,7 @@ int index(int i, int j)
 	return 8 * i + j + 1;
 }
 
-int Digit(int a[][COL], int i, int j)
+int Digit(int a[][COL], int i, int j)//1 0
 {
 	if (i < ROW && j < COL)
 	{
@@ -244,6 +251,7 @@ void showShuDu(char fileName[])
 	string x;
 	getline(out, x);
 	out.get();
+	out.get();//消除第一个空格
 	if (x[2] == '1')
 	{
 		int num{ 1 };
@@ -260,7 +268,7 @@ void showShuDu(char fileName[])
 				}
 				else
 				{
-					temp[num] = k;
+					temp[num++] = k;
 				}
 				if (k == 999)
 				{
@@ -279,8 +287,8 @@ void showShuDu(char fileName[])
 			}
 		}
 		string solutionName = fileName;
-		solutionName.erase(solutionName.size() - 3);
-		solutionName += "txt";
+		solutionName.erase(solutionName.size() - 4);
+		solutionName += "SoluTion.txt";
 		ofstream in(solutionName);
 		if (!in.is_open())
 		{
@@ -288,16 +296,18 @@ void showShuDu(char fileName[])
 			return;
 		}
 		int count{ 0 };//计数器
-		for (int i{ 1 }; i <= 999; i++)
+		for (int i{ 111 }; i <= 999; i++)
 		{
 			if (temp[i] > 0)
 			{
-				in << temp[i] << " ";
+
+				in << temp[i] % 10 << " ";
 				count++;
 			}
-			if (count % 9 == 0)
+			if (count == 9)
 			{
 				in << endl;
+				count = 0;
 			}
 		}
 	}
