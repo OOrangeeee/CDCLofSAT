@@ -1,4 +1,12 @@
+/*最后编辑：*/
+/*晋晨曦 2023.9.3 23:58*/
+/*qq：2950171570*/
+/*email：Jin0714@outlook.com  回复随缘*/
+
+
+
 #include "GlobalOfOldProgram.h"
+
 status IsEmptyClause(HeadNode*& LIST)
 {
 	HeadNode* PHead = LIST;
@@ -10,6 +18,7 @@ status IsEmptyClause(HeadNode*& LIST)
 	}
 	return FALSE;
 }
+
 HeadNode* IsSingleClause(HeadNode* Pfind)
 {
 	while (Pfind != nullptr)
@@ -20,6 +29,7 @@ HeadNode* IsSingleClause(HeadNode* Pfind)
 	}
 	return nullptr;
 }
+
 HeadNode* Duplication(HeadNode*& LIST)
 {
 	HeadNode* oldHead = LIST;
@@ -70,6 +80,7 @@ HeadNode* Duplication(HeadNode*& LIST)
 	}
 	return newHead;
 }
+
 HeadNode* ADDSingleClause(HeadNode*& LIST, int Var) //所加的单子句位于链表的头
 {
 	HeadNode* AddHead = new HeadNode;
@@ -85,6 +96,7 @@ HeadNode* ADDSingleClause(HeadNode*& LIST, int Var) //所加的单子句位于链表的头
 	LIST = AddHead;
 	return LIST;
 }
+
 void DeleteDataNode(int temp, HeadNode*& LIST)
 {
 	bool ifChange{ TRUE };
@@ -137,6 +149,7 @@ void DeleteDataNode(int temp, HeadNode*& LIST)
 			pHeadNode = pHeadNode->down;
 	}
 }
+
 HeadNode* DeleteHeadNode(HeadNode* delGoal, HeadNode*& LIST)
 {
 	if (!delGoal)
@@ -174,6 +187,7 @@ HeadNode* DeleteHeadNode(HeadNode* delGoal, HeadNode*& LIST)
 	delete delGoal;
 	return ans;
 }
+
 void XDeleteHeadNode(HeadNode* delGoal, HeadNode*& LIST)
 {
 	if (!delGoal)
@@ -194,6 +208,7 @@ void XDeleteHeadNode(HeadNode* delGoal, HeadNode*& LIST)
 	delete temp;
 	delete delGoal;
 }
+
 void DeleteList(HeadNode*& LIST)
 {
 	HeadNode* PHead = LIST;
@@ -213,6 +228,7 @@ void DeleteList(HeadNode*& LIST)
 		PPHead = nullptr;
 	}
 }
+
 int choose(HeadNode* head)
 {
 	std::unordered_map<int, int> frequencyMap;
@@ -232,6 +248,7 @@ int choose(HeadNode* head)
 	}
 	return mostFrequentElement;
 }
+
 HeadNode* FindHeadOfOne(HeadNode*& LIST, int num)
 {
 	HeadNode* PHead = LIST;
@@ -248,6 +265,7 @@ HeadNode* FindHeadOfOne(HeadNode*& LIST, int num)
 	}
 	return nullptr;
 }
+
 void DeleteHeadOfOne(HeadNode*& LIST, howMany* howManyTimes, int VARNUM)
 {
 	for (int i{ 1 }; i <= VARNUM; i++)
@@ -264,6 +282,7 @@ void DeleteHeadOfOne(HeadNode*& LIST, howMany* howManyTimes, int VARNUM)
 	}
 	delete[] howManyTimes;
 }
+
 status DPLL(HeadNode*& LIST, consequence* result, int chooseWay)
 {
 	//单子句规则

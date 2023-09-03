@@ -1,5 +1,5 @@
 /*最后编辑：*/
-/*晋晨曦 2023.9.3 3:46*/
+/*晋晨曦 2023.9.4 00:01*/
 /*qq：2950171570*/
 /*email：Jin0714@outlook.com  回复随缘*/
 
@@ -63,11 +63,7 @@ int Digit(int a[][COL], int i, int j)//1 0
 	}
 	return CORRECT;
 }
-/// <summary>
-/// 随机生成数独的第一行
-/// </summary>
-/// <param name="a0"></param>
-/// <param name="n"></param>
+
 void randomFirstRow(int a0[], int n)
 {
 	int i{ 0 };
@@ -140,8 +136,10 @@ void print(const int a[][COL], string shuduPath)
 	ofstream fos(shuduPath);
 	if (!fos.is_open())
 	{
+		SetColor(11);
 		cout << "无法打开文件" << endl;
-		exit;
+		SetColor(7);
+		exit(WRONG);
 	}
 	for (i = 0; i < ROW; i++)
 	{
@@ -161,8 +159,10 @@ string ToCnf(int a[][COL], int holes, string shuduPath)
 	ofstream in(shuduPath);//定义输入文件
 	if (!in.is_open())
 	{
+		SetColor(11);
 		cout << "无法打开文件\n";
-		exit;
+		SetColor(7);
+		exit(WRONG);
 	}
 	in << "p" << " " << "cnf" << " " << 999 << " " << 8829 + 81 - holes << endl;
 	//单子句
@@ -225,10 +225,14 @@ string createSudokuToFile()
 	int sudoku[ROW][COL] = { 0 };
 	int starting_grid[ROW][COL] = { 0 };
 	int holes{ 0 };//挖洞个数
+	SetColor(11);
 	cout << "输入你想挖几个洞（建议最大不要大于63个，最好在45个以内）：__\b\b";
+	SetColor(7);
 	cin >> holes;
 	string shuduPath;
+	SetColor(11);
 	cout << "请输入对应的数独文件地址:____________________________________________________________\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
+	SetColor(7);
 	cin >> shuduPath;
 	string shuDuName = "ShuDu.cnf";
 	shuduPath = shuduPath + "\\" + shuDuName;
@@ -243,14 +247,18 @@ string createSudokuToFile()
 void showShuDu(char fileName[])
 {
 	int ifShow{ 0 };
+	SetColor(11);
 	cout << "你是否要查看数独答案？\n1. YES   2. NO\n请输入:_\b";
+	SetColor(7);
 	cin >> ifShow;
 	string resultName = fileName;
 	int temp[1000];
 	ifstream out(resultName);
 	if (!out.is_open())
 	{
+		SetColor(11);
 		cout << "文件名错误\n";
+		SetColor(7);
 		return;
 	}
 	string x;
@@ -297,7 +305,9 @@ void showShuDu(char fileName[])
 		ofstream in(solutionName);
 		if (!in.is_open())
 		{
+			SetColor(11);
 			cout << "文件写入失败\n";
+			SetColor(7);
 			return;
 		}
 		int count{ 0 };//计数器
@@ -305,14 +315,14 @@ void showShuDu(char fileName[])
 		{
 			if (temp[i] > 0)
 			{
-				if (ifShow)
+				if (ifShow == 1)
 					cout << temp[i] % 10 << " ";
 				in << temp[i] % 10 << " ";
 				count++;
 			}
 			if (count == 9)
 			{
-				if (ifShow)
+				if (ifShow == 1)
 					cout << endl;
 				in << endl;
 				count = 0;
@@ -321,6 +331,8 @@ void showShuDu(char fileName[])
 	}
 	else
 	{
+		SetColor(11);
 		cout << "该数独无解！（可能是我的生成数独部分有误T_T）" << endl;
+		SetColor(7);
 	}
 }

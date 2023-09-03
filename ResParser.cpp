@@ -1,5 +1,5 @@
 /*最后编辑：*/
-/*晋晨曦 2023.9.3 3:46*/
+/*晋晨曦 2023.9.4 00:00*/
 /*qq：2950171570*/
 /*email：Jin0714@outlook.com  回复随缘*/
 
@@ -9,7 +9,9 @@
 void ShowTheRes(char filePath[])
 {
 	int x{ 0 };
+	SetColor(11);
 	cout << "\n你是否想查看结果内容？\n1. YES   2. NO\n请输入:_\b";
+	SetColor(7);
 	cin >> x;
 	if (x == 1)
 	{
@@ -35,10 +37,13 @@ void ShowTheRes(char filePath[])
 		cout << endl;
 	}
 }
+
 string createBackup(char originalFile[])
 {
 	int x{ 0 };
+	SetColor(11);
 	cout << "\n你是否需要备份文件?\n1. YES   2.NO\n请输入:_\b";
+	SetColor(7);
 	cin >> x;
 	string backupFile = originalFile;
 	if (x == 1)
@@ -50,7 +55,9 @@ string createBackup(char originalFile[])
 		in.open(originalFile);
 		while (!in)
 		{
+			SetColor(11);
 			cout << "\n在备份文件时，目标文件打开错误，请输入正确的文件格式，复制文件地址时两边的双引号需要保留\n\n";
+			SetColor(7);
 			string originalFileX;
 			cin >> originalFileX;
 			originalFileX = originalFileX.substr(1, originalFileX.size() - 2);
@@ -59,7 +66,9 @@ string createBackup(char originalFile[])
 		ofstream out;
 		out.open(backupFile);
 		out << in.rdbuf();
+		SetColor(11);
 		cout << "\n备份完成，已经备份到 " << backupFile << " 下\n";
+		SetColor(7);
 	}
 	else
 	{

@@ -1,5 +1,5 @@
 /*最后编辑：*/
-/*晋晨曦 2023.9.3 3:46*/
+/*晋晨曦 2023.9.3 23:59*/
 /*qq：2950171570*/
 /*email：Jin0714@outlook.com  回复随缘*/
 
@@ -20,7 +20,9 @@ string CreatHanidokuToFile(int hanidoku[][COL], string filePath)
 	//变量定义
 	int starting_grid[ROW][COL] = { 0 };//初盘
 	int holes{ 0 };//挖洞个数
+	SetColor(11);
 	cout << "输入你想挖几个洞（建议最好不要大于50个）：__\b\b";
+	SetColor(7);
 	cin >> holes;
 
 	//处理文件名
@@ -290,35 +292,6 @@ void GetCheck(int hanidoku[][COL], int check[], int i, int j)
 	}
 }
 
-//void FindMaxAndMinInLine(int hanidoku[][COL], int i, int j, int& max, int& min)
-//{
-//	int iX{ i };
-//	int jX{ j };
-//	max = hanidoku[i][j];
-//	min = hanidoku[i][j];
-//	for (int a{ 0 }; a <= j; a++)
-//	{
-//		min = hanidoku[i][a] > min ? min : hanidoku[i][a];
-//		max = hanidoku[i][a] > min ? hanidoku[i][a] : max;
-//	}
-//}
-//
-//void FindMaxAndMinInLeftUp(int hanidoku[][COL], int i, int j, int& max, int& min)
-//{
-//	int iX{ i };
-//	int jX{ j };
-//	max = hanidoku[i][j];
-//	min = hanidoku[i][j];
-//	if (i <= 4)
-//	{
-//
-//	}
-//	else
-//	{
-//
-//	}
-//}
-
 string HanidokuToCnf(int a[][COL], int holes, string shuduPath)
 {
 	int x{ 0 };
@@ -328,7 +301,9 @@ string HanidokuToCnf(int a[][COL], int holes, string shuduPath)
 	ofstream in(shuduPath);//定义输入文件
 	if (!in.is_open())
 	{
+		SetColor(11);
 		cout << "无法打开文件\n";
+		SetColor(7);
 		exit(WRONG);
 	}
 
@@ -854,7 +829,9 @@ void CreateHanidokuAns(char fileName[], int hanidoku[][COL])
 	ifstream out(resultName);
 	if (!out.is_open())
 	{
+		SetColor(11);
 		cout << "文件名错误\n";
+		SetColor(7);
 		return;
 	}
 	string x;
@@ -913,7 +890,9 @@ void CreateHanidokuAns(char fileName[], int hanidoku[][COL])
 	}
 	else
 	{
+		SetColor(11);
 		cout << "数独终盘生成错误" << endl;
+		SetColor(7);
 	}
 }
 
@@ -970,15 +949,27 @@ void KeepStartInTxt(int starting_grid[][COL], string fileName)
 	for (int i{ 0 }; i <= 8; i++)
 	{
 		for (int z{ 0 }; z < abs(i - 4); z++)
+		{
+			cout << " ";
 			in << " ";
+		}
 		for (int j{ 0 }; j <= 8 - abs(i - 4); j++)
+		{
+			cout << starting_grid[i][j] << " ";
 			in << starting_grid[i][j] << " ";
+		}
+		cout << endl;
 		in << endl;
 	}
 }
 
 void KeepAnsInTxt(char fileName[])
 {
+	int ifShow{ 0 };
+	SetColor(11);
+	cout << "你是否要查看数独答案？\n1. YES   2. NO\n请输入:_\b";
+	SetColor(7);
+	cin >> ifShow;
 	string fileNameStr = fileName;//res
 	string ansFileNameStr = fileName;//txt
 	ansFileNameStr.erase(ansFileNameStr.size() - 4);
@@ -1028,13 +1019,19 @@ void KeepAnsInTxt(char fileName[])
 		for (int i{ 0 }; i <= 8; i++)
 		{
 			for (int z{ 0 }; z < abs(i - 4); z++)
+			{
+				if (ifShow == 1)
+					cout << " ";
 				in << " ";
+			}
 			for (int j{ 0 }; j <= 8 - abs(i - 4); j++)
 			{
 				while (1)
 				{
 					if (temp[m] > 0)
 					{
+						if (ifShow == 1)
+							cout << temp[m] % 10 << " ";
 						in << temp[m] % 10 << " ";
 						m++;
 						break;
@@ -1042,11 +1039,15 @@ void KeepAnsInTxt(char fileName[])
 					m++;
 				}
 			}
+			if (ifShow == 1)
+				cout << endl;
 			in << endl;
 		}
 	}
 	else
 	{
+		SetColor(11);
 		cout << "\n数独无解！(别看我，我也不知道什么情况，如果你看了我的代码，你就应该知道我生成的这个数独一定是有解的，如果无解，请找自己的原因)\n";
+		SetColor(7);
 	}
 }
