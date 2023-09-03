@@ -9,10 +9,8 @@
 #define _SILENCE_CXX20_CISO646_REMOVED_WARNING
 #define _CRT_SECURE_NO_WARNINGS
 #include<bits/stdc++.h>
+#include"ImportantData.h"
 using namespace std;
-
-const int ROW{ 9 };
-const int COL{ 9 };
 
 //界面设定
 void Start();

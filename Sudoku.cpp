@@ -242,6 +242,9 @@ string createSudokuToFile()
 
 void showShuDu(char fileName[])
 {
+	int ifShow{ 0 };
+	cout << "你是否要查看数独答案？\n1. YES   2. NO\n请输入:_\b";
+	cin >> ifShow;
 	string resultName = fileName;
 	int temp[1000];
 	ifstream out(resultName);
@@ -302,12 +305,15 @@ void showShuDu(char fileName[])
 		{
 			if (temp[i] > 0)
 			{
-
+				if (ifShow)
+					cout << temp[i] % 10 << " ";
 				in << temp[i] % 10 << " ";
 				count++;
 			}
 			if (count == 9)
 			{
+				if (ifShow)
+					cout << endl;
 				in << endl;
 				count = 0;
 			}

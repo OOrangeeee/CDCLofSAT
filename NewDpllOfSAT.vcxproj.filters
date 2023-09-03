@@ -30,6 +30,15 @@
     <ClCompile Include="hanidoku.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="CnfParserOfOldProgram.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DPLLsolverOfOldProgram.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Check.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DPLLsolver.h">
@@ -39,6 +48,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="others.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalOfOldProgram.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportantData.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

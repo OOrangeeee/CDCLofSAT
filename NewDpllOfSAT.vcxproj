@@ -130,6 +130,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Check.cpp" />
+    <ClCompile Include="CnfParserOfOldProgram.cpp" />
+    <ClCompile Include="DPLLsolverOfOldProgram.cpp" />
     <ClCompile Include="hanidoku.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ResParser.cpp" />
@@ -138,6 +141,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DPLLsolver.h" />
+    <ClInclude Include="GlobalOfOldProgram.h" />
+    <ClInclude Include="ImportantData.h" />
     <ClInclude Include="others.h" />
     <ClInclude Include="structure.h" />
   </ItemGroup>
