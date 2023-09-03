@@ -1,5 +1,5 @@
 /*×îºó±à¼­£º*/
-/*½ú³¿êØ 2023.9.3 23:59*/
+/*½ú³¿êØ 2023.9.3 01:12*/
 /*qq£º2950171570*/
 /*email£ºJin0714@outlook.com  »Ø¸´ËæÔµ*/
 
@@ -93,7 +93,8 @@ void RandomTwoNumsOfHanidoku(int hanidoku[][COL])
 		while (1)
 		{
 			ifCon = 0;
-			srand(static_cast<unsigned int>(time(0)));
+			auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+			srand(static_cast<unsigned int>(microseconds));
 			for (int i{ 8 }; i > 0; --i)
 			{
 				int j = rand() % (i + 1);
@@ -101,9 +102,11 @@ void RandomTwoNumsOfHanidoku(int hanidoku[][COL])
 			}
 			int x{ 0 };
 			int y{ 0 };
-			srand(static_cast<unsigned int>(time(0)));
+			microseconds = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+			srand(static_cast<unsigned int>(microseconds));
 			x = numbers[rand() % 9];
-			srand(static_cast<unsigned int>(time(0)));
+			microseconds = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+			srand(static_cast<unsigned int>(microseconds));
 			y = numbers[rand() % 9 + 2];
 			for (int q{ 1 }; q < m; q++)
 				if (x == nums[q][1] && y == nums[q][2])
@@ -915,21 +918,31 @@ void CreateHanidokuQus(int hanidoku[][COL], int starting_grid[][COL], int holes)
 	int** tips = new int* [holes];
 	for (i = 0; i < holes; i++)
 		tips[i] = new int[2];
-	srand((unsigned)time(NULL));
 	for (i = 0; i < ROW; i++)
 		for (j = 0; j < COL; j++)
 			starting_grid[i][j] = hanidoku[i][j];
-	int m, flag = 0;
+	int m{ 0 };
+	int flag{ 0 };
+	for (i = 0; i < holes; i++)
+		for (int j{ 0 }; j < 2; j++)
+			tips[i][j] = 0;
 	for (i = 0; i < holes; i++)
 	{
+		/*auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+		srand(static_cast<unsigned int>(microseconds));*/
 		j = rand() % 9;
 		k = rand() % 9;
-		while (k<max(0, j - 4) || k>min(i + 4, 8))
+		while (k > 8 - abs(j - 4))
+		{
+			auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+			srand(static_cast<unsigned int>(microseconds));
 			k = rand() % 9;
+		}
 		flag = 0;
 		for (m = 0; m < i; m++)
 			if (j == tips[m][0] && k == tips[m][1])
 				flag = 1;
+
 		if (flag == 0)
 		{
 			starting_grid[j][k] = 0;
@@ -939,6 +952,9 @@ void CreateHanidokuQus(int hanidoku[][COL], int starting_grid[][COL], int holes)
 		else
 			i--;
 	}
+	for (i = 0; i < holes; i++)
+		delete[] tips[i];
+	delete tips;
 }
 
 void KeepStartInTxt(int starting_grid[][COL], string fileName)

@@ -1,5 +1,5 @@
 /*×îºó±à¼­£º*/
-/*½ú³¿êØ 2023.9.4 00:01*/
+/*½ú³¿êØ 2023.9.4 01:15*/
 /*qq£º2950171570*/
 /*email£ºJin0714@outlook.com  »Ø¸´ËæÔµ*/
 
@@ -100,9 +100,7 @@ void createStartinggrid(const int a[][COL], int b[][COL], int numDigits)
 			b[i][j] = a[i][j];
 	int** c = new int* [numDigits];
 	for (int i = 0; i < numDigits; i++)
-	{
 		c[i] = new int[2];
-	}
 	int m, flag = 0;
 	for (i = 0; i < numDigits; i++)
 	{

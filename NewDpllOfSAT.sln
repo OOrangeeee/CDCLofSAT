@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NewDpllOfSAT", "NewDpllOfSAT.vcxproj", "{A8DE7F7E-070C-44BE-8585-7D9813A19AC1}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "基于DPLL的蜂窝数独游戏", "..\基于DPLL的蜂窝数独游戏\基于DPLL的蜂窝数独游戏.vdproj", "{7B1DA519-80A8-48D7-AC6D-3064958298E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,10 @@ Global
 		{A8DE7F7E-070C-44BE-8585-7D9813A19AC1}.Release|x64.Build.0 = Release|x64
 		{A8DE7F7E-070C-44BE-8585-7D9813A19AC1}.Release|x86.ActiveCfg = Release|Win32
 		{A8DE7F7E-070C-44BE-8585-7D9813A19AC1}.Release|x86.Build.0 = Release|Win32
+		{7B1DA519-80A8-48D7-AC6D-3064958298E0}.Debug|x64.ActiveCfg = Debug
+		{7B1DA519-80A8-48D7-AC6D-3064958298E0}.Debug|x86.ActiveCfg = Debug
+		{7B1DA519-80A8-48D7-AC6D-3064958298E0}.Release|x64.ActiveCfg = Release
+		{7B1DA519-80A8-48D7-AC6D-3064958298E0}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
