@@ -20,7 +20,9 @@ int Digit(int a[][COL], int i, int j)//1 0
 	if (i < ROW && j < COL)
 	{
 		int x, y, k;
-		int check[COL + 1] = { CORRECT };//用于排除已经使用过的的数字
+		int check[COL + 1];
+		for (int a{ 0 }; a < COL + 1; a++)
+			check[a] = CORRECT;
 		for (x = 0; x < i; x++)
 			check[a[x][j]] = WRONG;//列已使用的数字置为WRONG
 		for (x = 0; x < j; x++)
@@ -35,7 +37,7 @@ int Digit(int a[][COL], int i, int j)//1 0
 					check[a[x][y]] = WRONG;
 		}
 		int flag = 0;
-		for (k = 1; k <= COL && flag == 0; k++)
+		for (k = 1; k <= 9 && flag == 0; k++)
 		{
 			if (check[k] == CORRECT)
 			{
@@ -223,7 +225,7 @@ string createSudokuToFile()
 	int sudoku[ROW][COL] = { 0 };
 	int starting_grid[ROW][COL] = { 0 };
 	int holes{ 0 };//挖洞个数
-	cout << "输入你想挖几个洞（由于是随机生成数独所以洞越多无解的可能越大，导致SAT问题出错的可能也越大\n建议最大不要大于63个，最好在45个以内）：__\b\b";
+	cout << "输入你想挖几个洞（建议最大不要大于63个，最好在45个以内）：__\b\b";
 	cin >> holes;
 	string shuduPath;
 	cout << "请输入对应的数独文件地址:____________________________________________________________\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";

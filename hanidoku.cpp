@@ -5,42 +5,33 @@
 
 
 
+#define _SILENCE_CXX20_CISO646_REMOVED_WARNING
 #define _CRT_SECURE_NO_WARNINGS
 #include"others.h"
+#include <filesystem>
 const int CORRECT{ 520 };
 const int WRONG{ 521 };
 
-string CreatHanidokuToFile()
+//函数详细阐释见函数声明
+
+string CreatHanidokuToFile(int hanidoku[][COL], string filePath)
 {
 	//变量定义
-	int hanidoku[ROW][COL] = { 0 };//终盘
 	int starting_grid[ROW][COL] = { 0 };//初盘
 	int holes{ 0 };//挖洞个数
-	string shuduPath;//数独路径
-	string shuDuName = "Hanidoku.cnf";//数独名称
-	string filename;//最终路径
-	int ifSuc{ 0 };
+	cout << "输入你想挖几个洞（建议最好不要大于50个）：__\b\b";
+	cin >> holes;
 
-	MakeHanidokuSure(hanidoku);//初始化数独 
+	//处理文件名
+	string filename;//最终路径
+	filePath.erase(filePath.size() - 3);
+	filename = filePath + "cnf";
+
 	MakeHanidokuSure(starting_grid);//初始化数独 
-	CreateHanidoku(hanidoku);//生成数独终盘 
-	//cout << "输入你想挖几个洞（由于是随机生成数独所以洞越多无解的可能越大，导致SAT问题出错的可能也越大\n建议最大不要大于63个，最好在45个以内）：__\b\b";
-	//cin >> holes;
-	//cout << "请输入对应的数独文件地址:____________________________________________________________\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
-	//cin >> shuduPath;
-	//shuduPath = shuduPath + "\\" + shuDuName;
-	//createStartinggrid(sudoku, starting_grid, holes);//生成初盘
-	//print(starting_grid, shuduPath);//输出初盘
-	////转化为cnf文件
-	//filename = ToCnf(starting_grid, holes, shuduPath);
-	/*for (int i{ 0 }; i < ROW; i++)
-	{
-		for (int j{ 0 }; j < COL; j++)
-			cout << hanidoku[i][j] << " ";
-		cout << endl;
-	}
-	getchar();
-	getchar();*/
+	CreateHanidokuQus(hanidoku, starting_grid, holes);//创建数独初盘
+	KeepStartInTxt(starting_grid, filename);//保存初盘文件
+	filename = HanidokuToCnf(hanidoku, 61 - holes, filename);//生成数独文件
+
 	return filename;
 }
 
@@ -55,43 +46,45 @@ void MakeHanidokuSure(int hannidoku[][COL])
 	}
 }
 
-string CreateHanidoku(int hanidoku[ROW][COL])
+string CreateHanidokuForDPLL(int hanidoku[ROW][COL], string shuduPath)
 {
+	string hanidokuName = "hanidoku.cnf";
+	shuduPath = shuduPath + "\\" + hanidokuName;
 	MakeHanidokuSure(hanidoku);//初始化数独   
-	RandomMidRowOfHanidoku(hanidoku[4]);//随机创建中间行
-	RandomFiveNumsOfHanidoku(hanidoku);//随机创建五个数
+	//RandomThreeNumsInMidRowOfHanidoku(hanidoku[4]);//随机创建中间行里的三个数
+	RandomTwoNumsOfHanidoku(hanidoku);//随机创建3个数
 	string hanidokuFileName;
-	string shuduPath = "E:\\test\\shusuShengCheng\\fengwo\\hanidoku.cnf";//数独文件临时储存  
-	hanidokuFileName = HanidokuToCnf(hanidoku, 61 - 6, shuduPath);//生成数独文件  
+	hanidokuFileName = HanidokuToCnf(hanidoku, 61 - 2, shuduPath);//生成数独文件  
 	return hanidokuFileName;
 }
 
-void RandomMidRowOfHanidoku(int midRow[])
+void RandomThreeNumsInMidRowOfHanidoku(int midRow[])
 {
 	// 创建一个包含1-9的数组
 	int numbers[9] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
+	//洗牌
 	srand(static_cast<unsigned int>(time(0)));
 	for (int i{ 8 }; i > 0; --i)
 	{
 		int j = rand() % (i + 1);
 		swap(numbers[i], numbers[j]);
 	}
-	/*for (int i{ 0 }; i < 9; i++)
-		midRow[i] = numbers[i];*/
+
+	//在三个固定位置随机插入三个数
 	midRow[3] = numbers[3];
 	midRow[5] = numbers[6];
 	midRow[8] = numbers[1];
 }
 
-void RandomFiveNumsOfHanidoku(int hanidoku[][COL])
+void RandomTwoNumsOfHanidoku(int hanidoku[][COL])
 {
 	int numbers[9] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	int ifSuc{ 0 };
 	int ifCon{ 0 };
 	int nums[6][3] = { 0 };
 
-	for (int m{ 1 }; m <= 3; m++)
+	for (int m{ 1 }; m <= 2; m++)
 	{
 		ifSuc = 0;
 		while (1)
@@ -851,4 +844,208 @@ string HanidokuToCnf(int a[][COL], int holes, string shuduPath)
 
 	in.close();
 	return shuduPath;
+}
+
+void CreateHanidokuAns(char fileName[], int hanidoku[][COL])
+{
+	string resultName = fileName;
+	int temp[1000];
+	ifstream out(resultName);
+	if (!out.is_open())
+	{
+		cout << "文件名错误\n";
+		return;
+	}
+	string x;
+	getline(out, x);
+	out.get();
+	out.get();//消除第一个空格
+	if (x[2] == '1')
+	{
+		int num{ 1 };
+		int k{ 0 };
+		bool ifFalse{ false };
+		while (1)
+		{
+			char c = out.get();
+			if (c == ' ')
+			{
+				if (ifFalse)
+				{
+					temp[num++] = 0 - k;
+				}
+				else
+				{
+					temp[num++] = k;
+				}
+				if (k == 999)
+				{
+					break;
+				}
+				k = 0;
+				ifFalse = false;
+			}
+			else if (c >= '0' && c <= '9')
+			{
+				k = (c - '0') + k * 10;
+			}
+			else if (c == '-')
+			{
+				ifFalse = true;
+			}
+		}
+		for (int x{ 0 }; x <= 8; x++)
+		{
+			for (int y{ 0 }; y <= 8 - abs(x - 4); y++)
+			{
+				for (int i{ 111 }; i <= 999; i++)
+				{
+					if (temp[i] > 0)
+					{
+						hanidoku[x][y] = temp[i] % 10;
+						temp[i] = 0 - temp[i];
+						break;
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		cout << "数独终盘生成错误" << endl;
+	}
+}
+
+void DeleteFiles(char FileNames[])
+{
+	string filename = FileNames;
+	filesystem::path filePath(filename);
+	filesystem::remove(filePath);
+	filename.erase(filename.size() - 3);
+	filename += "cnf";
+	filesystem::path filePathX(filename);
+	filesystem::remove(filePathX);
+}
+
+void CreateHanidokuQus(int hanidoku[][COL], int starting_grid[][COL], int holes)
+{
+	int i{ 0 };
+	int j{ 0 };
+	int k{ 0 };
+	int** tips = new int* [holes];
+	for (i = 0; i < holes; i++)
+		tips[i] = new int[2];
+	srand((unsigned)time(NULL));
+	for (i = 0; i < ROW; i++)
+		for (j = 0; j < COL; j++)
+			starting_grid[i][j] = hanidoku[i][j];
+	int m, flag = 0;
+	for (i = 0; i < holes; i++)
+	{
+		j = rand() % 9;
+		k = rand() % 9;
+		while (k<max(0, j - 4) || k>min(i + 4, 8))
+			k = rand() % 9;
+		flag = 0;
+		for (m = 0; m < i; m++)
+			if (j == tips[m][0] && k == tips[m][1])
+				flag = 1;
+		if (flag == 0)
+		{
+			starting_grid[j][k] = 0;
+			tips[i][0] = j;
+			tips[i][1] = k;
+		}
+		else
+			i--;
+	}
+}
+
+void KeepStartInTxt(int starting_grid[][COL], string fileName)
+{
+	fileName.erase(fileName.size() - 3);
+	fileName = fileName + "txt";
+	ofstream in(fileName);
+	for (int i{ 0 }; i <= 8; i++)
+	{
+		for (int z{ 0 }; z < abs(i - 4); z++)
+			in << " ";
+		for (int j{ 0 }; j <= 8 - abs(i - 4); j++)
+			in << starting_grid[i][j] << " ";
+		in << endl;
+	}
+}
+
+void KeepAnsInTxt(char fileName[])
+{
+	string fileNameStr = fileName;//res
+	string ansFileNameStr = fileName;//txt
+	ansFileNameStr.erase(ansFileNameStr.size() - 4);
+	ansFileNameStr += "Solution.txt";
+	ifstream out(fileName);
+	ofstream in(ansFileNameStr);
+	string firstLine;
+	getline(out, firstLine);
+	out.get();
+	out.get();//消除第一个空格
+	int temp[1000];
+	if (firstLine[2] == '1')
+	{
+		int num{ 1 };
+		int k{ 0 };
+		bool ifFalse{ false };
+		while (1)
+		{
+			char c = out.get();
+			if (c == ' ')
+			{
+				if (ifFalse)
+				{
+					temp[num++] = 0 - k;
+				}
+				else
+				{
+					temp[num++] = k;
+				}
+				if (k == 999)
+				{
+					break;
+				}
+				k = 0;
+				ifFalse = false;
+			}
+			else if (c >= '0' && c <= '9')
+			{
+				k = (c - '0') + k * 10;
+			}
+			else if (c == '-')
+			{
+				ifFalse = true;
+			}
+		}
+		int m = 111;
+		for (int i{ 0 }; i <= 8; i++)
+		{
+			for (int z{ 0 }; z < abs(i - 4); z++)
+				in << " ";
+			for (int j{ 0 }; j <= 8 - abs(i - 4); j++)
+			{
+				while (1)
+				{
+					if (temp[m] > 0)
+					{
+						in << temp[m] % 10 << " ";
+						m++;
+						break;
+					}
+					m++;
+				}
+			}
+			in << endl;
+		}
+	}
+	else
+	{
+		cout << "\n数独无解！(别看我，我也不知道什么情况，如果你看了我的代码，你就应该知道我生成的这个数独一定是有解的，如果无解，请找自己的原因)\n";
+	}
 }
