@@ -298,9 +298,7 @@ struct SearchParams
 
 
 
-/**************************
- * clause语句的定义
- * ***************************/
+//子句
 class Clause
 {
 public:

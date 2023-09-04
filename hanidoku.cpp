@@ -55,7 +55,7 @@ string CreateHanidokuForDPLL(int hanidoku[ROW][COL], string shuduPath)
 	shuduPath = shuduPath + "\\" + hanidokuName;
 	MakeHanidokuSure(hanidoku);//初始化数独   
 	//RandomThreeNumsInMidRowOfHanidoku(hanidoku[4]);//随机创建中间行里的三个数
-	RandomTwoNumsOfHanidoku(hanidoku);//随机创建3个数
+	RandomTwoNumsOfHanidoku(hanidoku);//随机创建2个数
 	string hanidokuFileName;
 	hanidokuFileName = HanidokuToCnf(hanidoku, 61 - 2, shuduPath);//生成数独文件  
 	return hanidokuFileName;
@@ -93,7 +93,7 @@ void RandomTwoNumsOfHanidoku(int hanidoku[][COL])
 		while (1)
 		{
 			ifCon = 0;
-			auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+			auto microseconds = chrono::duration_cast<chrono::microseconds>(chrono::system_clock::now().time_since_epoch()).count();
 			srand(static_cast<unsigned int>(microseconds));
 			for (int i{ 8 }; i > 0; --i)
 			{
@@ -102,10 +102,10 @@ void RandomTwoNumsOfHanidoku(int hanidoku[][COL])
 			}
 			int x{ 0 };
 			int y{ 0 };
-			microseconds = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+			microseconds = chrono::duration_cast<chrono::microseconds>(chrono::system_clock::now().time_since_epoch()).count();
 			srand(static_cast<unsigned int>(microseconds));
 			x = numbers[rand() % 9];
-			microseconds = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+			microseconds = chrono::duration_cast<chrono::microseconds>(chrono::system_clock::now().time_since_epoch()).count();
 			srand(static_cast<unsigned int>(microseconds));
 			y = numbers[rand() % 9 + 2];
 			for (int q{ 1 }; q < m; q++)
