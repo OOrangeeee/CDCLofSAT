@@ -44,7 +44,7 @@ int main(void)
 				int length{ 0 };//文件名长度
 				Solver s;//生成类
 				int res{ 0 };//返回值，有解1，无解-1
-				int literalNum{ -1 };//文字数量
+				int VARNUM{ -1 };//文字数量
 				char* filenameP = nullptr;//文件名处理指针
 				char* filenamePP = nullptr;//文件名处理指针
 
@@ -72,19 +72,19 @@ int main(void)
 				resultName[length - 3] = 'r';
 
 				//核心代码
-				literalNum = s.read(fileName);//读取文件 
-				if (literalNum == -1)
+				VARNUM = s.Read(fileName);//读取文件 
+				if (VARNUM == -1)
 				{
 					res = -2;
-					s.write(0, literalNum, fileName);
+					s.Print(0, VARNUM, fileName);
 				}
 				else
 				{
 					start = clock();
-					res = s.solve();
+					res = s.GetAns();
 					end = clock();
 					time = (double)(end - start) / CLOCKS_PER_SEC * 1000.0;
-					s.write(time, literalNum, fileName);
+					s.Print(time, VARNUM, fileName);
 				}
 				switch (res)
 				{
@@ -283,23 +283,23 @@ int main(void)
 			clock_t start{ 0 };//开始时间
 			clock_t end{ 0 };//结束时间
 			int res{ 0 };//返回值，有解1，无解-1
-			int literalNum{ -1 };//文字数量
+			int VARNUM{ -1 };//文字数量
 			char resultName[500];//结果路径
 
 			//核心代码
-			literalNum = s.read(fileName);//读取文件
-			if (literalNum == -1)
+			VARNUM = s.Read(fileName);//读取文件
+			if (VARNUM == -1)
 			{
 				res = -2;
-				s.write(0, literalNum, fileName);
+				s.Print(0, VARNUM, fileName);
 			}
 			else
 			{
 				start = clock();
-				res = s.solve();
+				res = s.GetAns();
 				end = clock();
 				time = (double)(end - start) / CLOCKS_PER_SEC * 1000.0;
-				s.write(time, literalNum, fileName);
+				s.Print(time, VARNUM, fileName);
 			}
 			/*for (i = 0; i < strlen(fileName); i++)
 				resultName[i] = fileName[i];
@@ -366,25 +366,25 @@ int main(void)
 
 				//解出数独文件，生成终盘
 				Solver s;//生成类   
-				int literalNum{ -1 };//文字数量   
+				int VARNUM{ -1 };//文字数量   
 				long long int time{ 0 };//时间 
 				clock_t start{ 0 };//开始时间 
 				clock_t end{ 0 };//结束时间 
 
 				//核心代码
-				literalNum = s.read(fileName);//读取文件 
-				if (literalNum == -1)
+				VARNUM = s.Read(fileName);//读取文件 
+				if (VARNUM == -1)
 				{
 					res = -2;
-					s.write(0, literalNum, fileName);
+					s.Print(0, VARNUM, fileName);
 				}
 				else
 				{
 					start = clock();
-					res = s.solve();
+					res = s.GetAns();
 					end = clock();
 					time = (double)(end - start) / CLOCKS_PER_SEC * 1000.0;
-					s.write(time, literalNum, fileName);
+					s.Print(time, VARNUM, fileName);
 				}
 			} while (res != 1);
 			CreateHanidokuAns(fileName, hanidoku);
@@ -397,24 +397,24 @@ int main(void)
 
 			//核心代码
 			Solver s;//生成类    
-			int literalNum{ -1 };//文字数量    
+			int VARNUM{ -1 };//文字数量    
 			long long int time{ 0 };//时间  
 			clock_t start{ 0 };//开始时间  
 			clock_t end{ 0 };//结束时间  
 
-			literalNum = s.read(fileName);//读取文件  
-			if (literalNum == -1)
+			VARNUM = s.Read(fileName);//读取文件  
+			if (VARNUM == -1)
 			{
 				res = -2;
-				s.write(0, literalNum, fileName);
+				s.Print(0, VARNUM, fileName);
 			}
 			else
 			{
 				start = clock();
-				res = s.solve();
+				res = s.GetAns();
 				end = clock();
 				time = (double)(end - start) / CLOCKS_PER_SEC * 1000.0;
-				s.write(time, literalNum, fileName);
+				s.Print(time, VARNUM, fileName);
 			}
 			SetColor(11);
 			cout << "你是否打算输入数独答案？\n1. YES   2. NO\n请输入：_\b";

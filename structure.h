@@ -287,10 +287,10 @@ public:
 //搜索时用的衰变参数。对实现函数进行封装，如果不传入参数则默认为1，1，0
 struct SearchParams
 {
-	double var_decay, clause_decay, rand_feq;
+	double varDecrease, clause_decay, rand_feq;
 	SearchParams(double v = 1, double c = 1, double r = 0)
 	{
-		var_decay = v;
+		varDecrease = v;
 		clause_decay = c;
 		rand_feq = r;
 	}
@@ -303,16 +303,16 @@ class Clause
 {
 public:
 	bool learnt = 0;//是否为学习语句
-	double activity = 0;//活跃度
+	double Act = 0;//活跃度
 	mVector<lit> lits;//动态数组做出的文字列表
 	bool operator<(const Clause x)//判断语句的活跃度大小
 	{
-		return activity < x.activity;
+		return Act < x.Act;
 	}
-	void calcReason(Solver& S, lit p, mVector<lit>& out_reason);//冲突原因
-	bool Clause_new(Solver& S, mVector<lit> ps, bool learnt, Clause*& out_clause);//薪资据
-	bool locked(Solver S);
-	bool simplify(Solver& S);
-	bool propagate(Solver& S, lit p);
+	void ReasonForLearn(Solver& S, lit p, mVector<lit>& out_reason);//冲突原因
+	bool GetNewClause(Solver& S, mVector<lit> ps, bool learnt, Clause*& out_clause);//薪资据
+	bool IsClause(Solver S);
+	bool GetCleanInClause(Solver& S);
+	bool GetClauseInfluence(Solver& S, lit p);
 
 };
