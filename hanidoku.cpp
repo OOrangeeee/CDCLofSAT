@@ -1,5 +1,5 @@
 /*×îºó±à¼­£º*/
-/*½ú³¿êØ 2023.9.3 01:12*/
+/*½ú³¿êØ 2023.9.6 18:58*/
 /*qq£º2950171570*/
 /*email£ºJin0714@outlook.com  »Ø¸´ËæÔµ*/
 
@@ -964,19 +964,63 @@ void KeepStartInTxt(int starting_grid[][COL], string fileName)
 	ofstream in(fileName);
 	for (int i{ 0 }; i <= 8; i++)
 	{
-		for (int z{ 0 }; z < abs(i - 4); z++)
+		for (int z{ 1 }; z <= abs(2 * i - 9); z++)
 		{
 			cout << " ";
 			in << " ";
 		}
+		if (i < 5)
+			for (int j{ 0 }; j <= 8 - abs(i - 4); j++)
+			{
+				cout << "/ \\ ";
+				in << "/ \\ ";
+			}
+		else
+			for (int j{ 0 }; j <= 8 - abs(i - 4) + 1; j++)
+			{
+				cout << "\\ / ";
+				in << "\\ / ";
+			}
+		cout << endl;
+		in << endl;
+		for (int z{ 0 }; z < abs(i - 4); z++)
+		{
+			cout << "  ";
+			in << "  ";
+		}
+		cout << "|";
+		in << "|";
 		for (int j{ 0 }; j <= 8 - abs(i - 4); j++)
 		{
-			cout << starting_grid[i][j] << " ";
-			in << starting_grid[i][j] << " ";
+			if (starting_grid[i][j] == 0)
+			{
+				cout << " " << "." << " |";
+				in << " " << "." << " |";
+			}
+			else
+			{
+				cout << " " << starting_grid[i][j] << " |";
+				in << " " << starting_grid[i][j] << " |";
+			}
+			/*cout << " " << (starting_grid[i][j] == 0 ? "." : starting_grid[i][j]) << " |";
+			in << " " << (starting_grid[i][j] == 0 ? "." : starting_grid[i][j]) << " |";*/
 		}
 		cout << endl;
 		in << endl;
 	}
+	for (int i{ 1 }; i <= 9; i++)
+	{
+		cout << " ";
+		in << " ";
+	}
+
+	for (int i{ 0 }; i < 5; i++)
+	{
+		cout << "\\ / ";
+		in << "\\ / ";
+	}
+	cout << endl;
+	in << endl;
 }
 
 void KeepAnsInTxt(char fileName[])
@@ -1034,12 +1078,33 @@ void KeepAnsInTxt(char fileName[])
 		int m = 111;
 		for (int i{ 0 }; i <= 8; i++)
 		{
-			for (int z{ 0 }; z < abs(i - 4); z++)
+
+			for (int z{ 1 }; z <= abs(2 * i - 9); z++)
 			{
-				if (ifShow == 1)
-					cout << " ";
+				cout << " ";
 				in << " ";
 			}
+			if (i < 5)
+				for (int j{ 0 }; j <= 8 - abs(i - 4); j++)
+				{
+					cout << "/ \\ ";
+					in << "/ \\ ";
+				}
+			else
+				for (int j{ 0 }; j <= 8 - abs(i - 4) + 1; j++)
+				{
+					cout << "\\ / ";
+					in << "\\ / ";
+				}
+			cout << endl;
+			in << endl;
+			for (int z{ 0 }; z < abs(i - 4); z++)
+			{
+				cout << "  ";
+				in << "  ";
+			}
+			cout << "|";
+			in << "|";
 			for (int j{ 0 }; j <= 8 - abs(i - 4); j++)
 			{
 				while (1)
@@ -1047,8 +1112,8 @@ void KeepAnsInTxt(char fileName[])
 					if (temp[m] > 0)
 					{
 						if (ifShow == 1)
-							cout << temp[m] % 10 << " ";
-						in << temp[m] % 10 << " ";
+							cout << " " << temp[m] % 10 << " |";
+						in << " " << temp[m] % 10 << " |";
 						m++;
 						break;
 					}
@@ -1059,6 +1124,18 @@ void KeepAnsInTxt(char fileName[])
 				cout << endl;
 			in << endl;
 		}
+		for (int i{ 1 }; i <= 9; i++)
+		{
+			cout << " ";
+			in << " ";
+		}
+		for (int i{ 0 }; i < 5; i++)
+		{
+			cout << "\\ / ";
+			in << "\\ / ";
+		}
+		cout << endl;
+		in << endl;
 	}
 	else
 	{

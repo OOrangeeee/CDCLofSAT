@@ -1,5 +1,5 @@
 /*×îºó±à¼­£º*/
-/*½ú³¿êØ 2023.9.4 01:15*/
+/*½ú³¿êØ 2023.9.6 18:58*/
 /*qq£º2950171570*/
 /*email£ºJin0714@outlook.com  »Ø¸´ËæÔµ*/
 
@@ -141,14 +141,26 @@ void print(const int a[][COL], string shuduPath)
 	}
 	for (i = 0; i < ROW; i++)
 	{
+		cout << "-------------------------------------" << endl << "|";
+		fos << "-------------------------------------" << endl << "|";
 		for (j = 0; j < COL; j++)
 		{
-			cout << a[i][j] << " ";
-			fos << a[i][j] << " ";
+			if (a[i][j] != 0)
+			{
+				cout << " " << a[i][j] << " |";
+				fos << " " << a[i][j] << " |";
+			}
+			else
+			{
+				cout << " " << " " << " |";
+				fos << " " << " " << " |";
+			}
 		}
 		cout << endl;
 		fos << endl;
 	}
+	cout << "-------------------------------------" << endl;
+	fos << "-------------------------------------" << endl;
 }
 
 string ToCnf(int a[][COL], int holes, string shuduPath)
@@ -309,23 +321,56 @@ void showShuDu(char fileName[])
 			return;
 		}
 		int count{ 0 };//¼ÆÊýÆ÷
+		int countOfAll{ 0 };
+		if (ifShow == 1)
+			cout << "-------------------------------------" << endl << "|";
+		in << "-------------------------------------" << endl << "|";
 		for (int i{ 111 }; i <= 999; i++)
 		{
 			if (temp[i] > 0)
 			{
 				if (ifShow == 1)
-					cout << temp[i] % 10 << " ";
-				in << temp[i] % 10 << " ";
+					cout << " " << temp[i] % 10 << " |";
+				in << " " << temp[i] % 10 << " |";
 				count++;
 			}
 			if (count == 9)
 			{
 				if (ifShow == 1)
-					cout << endl;
-				in << endl;
+					cout << endl << "-------------------------------------" << endl;
+				in << endl << "-------------------------------------" << endl;
+				countOfAll++;
+				if (countOfAll < 9)
+				{
+					if (ifShow == 1)
+						cout << "|";
+					in << "|";
+				}
 				count = 0;
 			}
 		}
+		/*for (i = 0; i < ROW; i++)
+	{
+		cout << "-------------------------------------" << endl << "|";
+		fos << "-------------------------------------" << endl << "|";
+		for (j = 0; j < COL; j++)
+		{
+			if (a[i][j] != 0)
+			{
+				cout << " " << a[i][j] << " |";
+				fos << " " << a[i][j] << " |";
+			}
+			else
+			{
+				cout << " " << " " << " |";
+				fos << " " << " " << " |";
+			}
+		}
+		cout << endl;
+		fos << endl;
+	}
+	cout << "-------------------------------------";
+	fos << "-------------------------------------";*/
 	}
 	else
 	{
