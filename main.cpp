@@ -1,5 +1,5 @@
 ﻿/*最后编辑：*/
-/*晋晨曦 2023.9.4 00:00*/
+/*晋晨曦 2023.9.6 14:39*/
 /*qq：2950171570*/
 /*email：Jin0714@outlook.com  回复随缘*/
 
@@ -73,6 +73,18 @@ int main(void)
 
 				//核心代码
 				VARNUM = s.Read(fileName);//读取文件 
+				SetColor(11);
+				cout << "你是否想查看读取的cnf文件？\n1. YES   2. NO\n请输入:_\b";
+				int ifShowCnf{ 0 };
+				while (ifShowCnf != 1 && ifShowCnf != 2)
+				{
+					cin >> ifShowCnf;
+					if (ifShowCnf != 1 && ifShowCnf != 2)
+						cout << "输入错误，重新输入\n";
+				}
+				SetColor(7);
+				if (ifShowCnf == 1)
+					s.ShowCNF();
 				if (VARNUM == -1)
 				{
 					res = -2;
@@ -119,12 +131,27 @@ int main(void)
 				string filePath;
 				howMany* howManyTimes;
 				howManyTimes = new howMany[maxInt + 1];
-				int VARNUM;
+				int VARNUM{ 0 };
+				int clauseNum{ 0 };
 				string fileP;
-				int ifTrue;
+				int ifTrue{ 0 };
 
 				//文件读取
-				HeadNode* LIST = CreateClause(fileP, VARNUM, howManyTimes);
+				HeadNode* LIST = CreateClause(fileP, VARNUM, clauseNum, howManyTimes);
+
+				//输出CNF
+				SetColor(11);
+				cout << "你是否想查看读取的cnf文件？\n1. YES   2. NO\n请输入:_\b";
+				int ifShowCnf{ 0 };
+				while (ifShowCnf != 1 && ifShowCnf != 2)
+				{
+					cin >> ifShowCnf;
+					if (ifShowCnf != 1 && ifShowCnf != 2)
+						cout << "输入错误，重新输入\n";
+				}
+				SetColor(7);
+				if (ifShowCnf == 1)
+					ShowTheCnf(LIST, VARNUM, clauseNum);
 
 				//核心代码
 
@@ -188,11 +215,26 @@ int main(void)
 				howMany* howManyTimes;
 				howManyTimes = new howMany[maxInt + 1];
 				int VARNUM;
+				int clauseNum{ 0 };
 				string fileP;
 				int ifTrue;
 
 				//文件读取
-				HeadNode* LIST = CreateClause(fileP, VARNUM, howManyTimes);
+				HeadNode* LIST = CreateClause(fileP, VARNUM, clauseNum, howManyTimes);
+
+				//输出CNF
+				SetColor(11);
+				cout << "你是否想查看读取的cnf文件？\n1. YES   2. NO\n请输入:_\b";
+				int ifShowCnf{ 0 };
+				while (ifShowCnf != 1 && ifShowCnf != 2)
+				{
+					cin >> ifShowCnf;
+					if (ifShowCnf != 1 && ifShowCnf != 2)
+						cout << "输入错误，重新输入\n";
+				}
+				SetColor(7);
+				if (ifShowCnf == 1)
+					ShowTheCnf(LIST, VARNUM, clauseNum);
 
 				//核心代码
 
@@ -486,5 +528,7 @@ int main(void)
 		cin >> choice;
 	}
 	CoutWrods(0);
+	getchar();
+	getchar();
 	return 0;
 }

@@ -94,9 +94,10 @@ void DeleteList(HeadNode*& LIST);
 /// </summary>
 /// <param name="fileP">文件地址</param>
 /// <param name="VARNUM">文字数目</param>
+/// <param name="ClauseNum">子句数目</param>
 /// <param name="howManyTimes">出现了多少次</param>
 /// <returns>返回头节点的第一个</returns>
-HeadNode* CreateClause(string& fileP, int& VARNUM, howMany*& howManyTimes);
+HeadNode* CreateClause(string& fileP, int& VARNUM, int& ClauseNum, howMany*& howManyTimes);
 
 /// <summary>
 /// 读取文件的重载形式，用于无需计算出现多少次的读取情况
@@ -174,3 +175,11 @@ void DeleteDataNode(int temp, HeadNode*& LIST);
 /// <param name="RES">答案路径</param>
 /// <returns>返回是否正确</returns>
 int CheckCNFandRES(string CNF, string RES);
+
+/// <summary>
+/// 输出CNF
+/// </summary>
+/// <param name="HEAD">邻接表头</param>
+/// <param name="VARNUM">文字数目</param>
+/// <param name="ClasuseNum">子句数目</param>
+void ShowTheCnf(HeadNode* HEAD, const int VARNUM, const int ClasuseNum);

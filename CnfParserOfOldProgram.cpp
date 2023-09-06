@@ -1,5 +1,5 @@
 /*×îºó±à¼­£º*/
-/*½ú³¿êØ 2023.9.3 23:57*/
+/*½ú³¿êØ 2023.9.6 14:39*/
 /*qq£º2950171570*/
 /*email£ºJin0714@outlook.com  »Ø¸´ËæÔµ*/
 
@@ -8,7 +8,7 @@
 #include "GlobalOfOldProgram.h"
 #include"others.h"
 
-HeadNode* CreateClause(string& fileP, int& VARNUM, howMany*& howManyTimes)
+HeadNode* CreateClause(string& fileP, int& VARNUM, int& ClauseNum, howMany*& howManyTimes)
 {
 	ifstream fis;
 	SetColor(11);
@@ -36,7 +36,7 @@ HeadNode* CreateClause(string& fileP, int& VARNUM, howMany*& howManyTimes)
 		fis >> ch;
 	}
 	string cnf;
-	int VarNum, ClauseNum;
+	int VarNum{ 0 };
 	fis >> cnf >> VarNum >> ClauseNum;
 	fis.get();
 
@@ -204,4 +204,24 @@ HeadNode* CreateClause(string fileP, int& VARNUM, int& ClauseNum)
 	}
 	END->down = nullptr;
 	return HEAD;
+}
+
+void ShowTheCnf(HeadNode* HEAD, const int VARNUM, const int ClasuseNum)
+{
+	HeadNode* Phead = HEAD;
+	DataNode* front;
+	cout << "\n----------------------\n";
+	cout << "p cnf " << VARNUM << " " << ClasuseNum << endl;
+	while (Phead != nullptr)
+	{
+		front = Phead->right;
+		while (front != nullptr)
+		{
+			cout << front->data << " ";
+			front = front->next;
+		}
+		cout << endl;
+		Phead = Phead->down;
+	}
+	cout << "\n----------------------\n";
 }

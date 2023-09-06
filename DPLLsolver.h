@@ -1,5 +1,5 @@
 /*最后编辑：*/
-/*晋晨曦 2023.9.4 21.39*/
+/*晋晨曦 2023.9.6 14:40*/
 /*qq：2950171570*/
 /*email：Jin0714@outlook.com  回复随缘*/
 
@@ -222,9 +222,9 @@ public:
 
 	void FlashBack()
 	{
-		lit p = timeInList[timeInList.size() - 1]; 
+		lit p = timeInList[timeInList.size() - 1];
 		// 获取'p'的变量编号
-		int x = p.var(); 
+		int x = p.var();
 		// 将变量'x'的赋值状态设为未设置
 		fuHao[x] = Unset;
 		// 将变量'x'的原因设为nullptr
@@ -240,10 +240,10 @@ public:
 	bool MakeD(int num)
 	{
 		// 创建一个新的文字'p'，并将其设置为输入的数字
-		lit p; 
-		p.x = num; 
-		timeInLiseF.push_back(timeInList.size()); 
-		return Enqueue(p, nullptr); 
+		lit p;
+		p.x = num;
+		timeInLiseF.push_back(timeInList.size());
+		return Enqueue(p, nullptr);
 	}
 
 	void FlashBackAll()
@@ -744,6 +744,23 @@ public:
 		}
 		fprintf(f, "t %lld", timer);
 		fclose(f);
+	}
+
+	void ShowCNF()
+	{
+		cout << "\n----------------------\n";
+		cout << "p cnf " << VARNUM << " " << clauseNum << endl;
+		for (int i{ 0 }; i < ClauseNum; i++)
+		{
+			for (int j{ 0 }; j < clauses[i]->lits.size(); j++)
+			{
+				/*int fuHao = clauses[i]->lits[j].sign();
+				int num= clauses[i]->lits[j].var();*/
+				cout << ((clauses[i]->lits[j].sign()) ? clauses[i]->lits[j].var() : 0 - clauses[i]->lits[j].var()) << " ";
+			}
+			cout << "0" << endl;
+		}
+		cout << "\n----------------------\n";
 	}
 };
 
