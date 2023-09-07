@@ -1,5 +1,5 @@
 /*最后编辑：*/
-/*晋晨曦 2023.9.6 18:58*/
+/*晋晨曦 2023.9.7 23:36*/
 /*qq：2950171570*/
 /*email：Jin0714@outlook.com  回复随缘*/
 
@@ -128,6 +128,7 @@ void RandomTwoNumsOfHanidoku(int hanidoku[][COL])
 	}
 }
 
+//本函数是生成数独的第一方案，因效率低下而废弃，故没有调用过此函数
 int FindOtherNums(int hanidoku[][COL], int i, int j)
 {
 	int check[COL * ROW] = { 0 };
@@ -176,6 +177,7 @@ int FindOtherNums(int hanidoku[][COL], int i, int j)
 			{
 				if (check[x] == CORRECT)
 				{
+					flag = 1;
 					hanidoku[i][j] = x;
 					if (j + 1 > 12 - i)
 					{

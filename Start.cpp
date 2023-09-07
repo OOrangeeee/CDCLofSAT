@@ -1,5 +1,5 @@
 /*最后编辑：*/
-/*晋晨曦 2023.9.4 00:01*/
+/*晋晨曦 2023.9.7 23:39*/
 /*qq：2950171570*/
 /*email：Jin0714@outlook.com  回复随缘*/
 
@@ -8,6 +8,8 @@
 #define WIN32_LEAN_AND_MEAN
 #include"others.h"
 #include <windows.h>
+
+//详细用法和含义见声明中的注释
 
 void SetColor(int ForgC)
 {

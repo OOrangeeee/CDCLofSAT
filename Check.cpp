@@ -1,5 +1,5 @@
 /*最后编辑：*/
-/*晋晨曦 2023.9.3 23:57*/
+/*晋晨曦 2023.9.7 23:38*/
 /*qq：2950171570*/
 /*email：Jin0714@outlook.com  回复随缘*/
 
@@ -7,6 +7,8 @@
 
 #include"GlobalOfOldProgram.h"
 #include"others.h"
+
+//详细用法和含义见声明中的注释
 
 int CheckCNFandRES(string CNFpath, string RESpath)
 {

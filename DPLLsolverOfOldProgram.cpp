@@ -7,6 +7,8 @@
 
 #include "GlobalOfOldProgram.h"
 
+//详细用法和含义见声明中的注释
+
 status IsEmptyClause(HeadNode*& LIST)
 {
 	HeadNode* PHead = LIST;

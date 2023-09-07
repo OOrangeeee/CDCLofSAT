@@ -1,11 +1,14 @@
 /*最后编辑：*/
-/*晋晨曦 2023.9.6 18:58*/
+/*晋晨曦 2023.9.7 23:40*/
 /*qq：2950171570*/
 /*email：Jin0714@outlook.com  回复随缘*/
 
 
 
 #include "others.h"
+
+//详细用法和含义见声明中的注释
+
 const int CORRECT{ 520 };
 const int WRONG{ 521 };
 static int T = 0;

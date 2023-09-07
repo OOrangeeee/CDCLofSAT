@@ -1,5 +1,5 @@
 /*最后编辑：*/
-/*晋晨曦 2023.9.6 14:40*/
+/*晋晨曦 2023.9.7 23:37*/
 /*qq：2950171570*/
 /*email：Jin0714@outlook.com  回复随缘*/
 
@@ -87,6 +87,17 @@ public:
 	}
 };
 
+//搜索时用的衰变参数。对实现函数进行封装，如果不传入参数则默认为1，1，0
+struct SearchParams
+{
+	double varDecrease, clause_decay, rand_feq;
+	SearchParams(double v = 1, double c = 1, double r = 0)//初始化结构体用的函数
+	{
+		varDecrease = v;
+		clause_decay = c;
+		rand_feq = r;
+	}
+};
 
 //自定义可变数组对标std::vector
 template <class T>//泛型编程
@@ -309,20 +320,6 @@ public:
 	int count;
 };
 
-//搜索时用的衰变参数。对实现函数进行封装，如果不传入参数则默认为1，1，0
-struct SearchParams
-{
-	double varDecrease, clause_decay, rand_feq;
-	SearchParams(double v = 1, double c = 1, double r = 0)//初始化结构体用的函数
-	{
-		varDecrease = v;
-		clause_decay = c;
-		rand_feq = r;
-	}
-};
-
-
-
 //子句
 class Clause
 {
@@ -344,5 +341,5 @@ public:
 	bool IsClause(Solver S);//判断该子句能不能被化简，单子句不化简
 	bool GetNewClause(Solver& S, mVector<lit> ps, bool learnt, Clause*& out_clause);//生成新的学习子句
 	bool MakeClauseMoreCleaner(Solver& S);//化简子句，去掉已赋值变元，仅限第一层
-	
+
 };
