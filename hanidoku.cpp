@@ -1081,29 +1081,35 @@ void KeepAnsInTxt(char fileName[])
 
 			for (int z{ 1 }; z <= abs(2 * i - 9); z++)
 			{
-				cout << " ";
+				if (ifShow == 1)
+					cout << " ";
 				in << " ";
 			}
 			if (i < 5)
 				for (int j{ 0 }; j <= 8 - abs(i - 4); j++)
 				{
-					cout << "/ \\ ";
+					if (ifShow == 1)
+						cout << "/ \\ ";
 					in << "/ \\ ";
 				}
 			else
 				for (int j{ 0 }; j <= 8 - abs(i - 4) + 1; j++)
 				{
-					cout << "\\ / ";
+					if (ifShow == 1)
+						cout << "\\ / ";
 					in << "\\ / ";
 				}
-			cout << endl;
+			if (ifShow == 1)
+				cout << endl;
 			in << endl;
 			for (int z{ 0 }; z < abs(i - 4); z++)
 			{
-				cout << "  ";
+				if (ifShow == 1)
+					cout << "  ";
 				in << "  ";
 			}
-			cout << "|";
+			if (ifShow == 1)
+				cout << "|";
 			in << "|";
 			for (int j{ 0 }; j <= 8 - abs(i - 4); j++)
 			{
@@ -1126,15 +1132,18 @@ void KeepAnsInTxt(char fileName[])
 		}
 		for (int i{ 1 }; i <= 9; i++)
 		{
-			cout << " ";
+			if (ifShow == 1)
+				cout << " ";
 			in << " ";
 		}
 		for (int i{ 0 }; i < 5; i++)
 		{
-			cout << "\\ / ";
+			if (ifShow == 1)
+				cout << "\\ / ";
 			in << "\\ / ";
 		}
-		cout << endl;
+		if (ifShow == 1)
+			cout << endl;
 		in << endl;
 	}
 	else

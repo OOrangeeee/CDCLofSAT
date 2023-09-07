@@ -8,7 +8,7 @@
 #include "GlobalOfOldProgram.h"
 #include"others.h"
 
-HeadNode* CreateClause(string& fileP, int& VARNUM, int& ClauseNum, howMany*& howManyTimes)
+HeadNode* CreateClause(string& fileP, int& VARNUM, int& clasuseSize, howMany*& howManyTimes)
 {
 	ifstream fis;
 	SetColor(11);
@@ -37,7 +37,7 @@ HeadNode* CreateClause(string& fileP, int& VARNUM, int& ClauseNum, howMany*& how
 	}
 	string cnf;
 	int VarNum{ 0 };
-	fis >> cnf >> VarNum >> ClauseNum;
+	fis >> cnf >> VarNum >> clasuseSize;
 	fis.get();
 
 	HeadNode* HEAD = new HeadNode;
@@ -48,7 +48,7 @@ HeadNode* CreateClause(string& fileP, int& VARNUM, int& ClauseNum, howMany*& how
 	HeadNode* headPre = HEAD;
 	HeadNode* headRear = HEAD;
 	HeadNode* END = headRear;
-	for (int i = 0; i < ClauseNum; i++)
+	for (int i = 0; i < clasuseSize; i++)
 	{
 		int temp;
 		fis >> temp;
@@ -137,7 +137,7 @@ HeadNode* CreateClause(string& fileP, int& VARNUM, int& ClauseNum, howMany*& how
 	return HEAD;
 }
 
-HeadNode* CreateClause(string fileP, int& VARNUM, int& ClauseNum)
+HeadNode* CreateClause(string fileP, int& VARNUM, int& clasuseSize)
 {
 	ifstream fis;
 	fis.open(fileP);
@@ -159,7 +159,7 @@ HeadNode* CreateClause(string fileP, int& VARNUM, int& ClauseNum)
 		fis >> ch;
 	}
 	string cnf;
-	fis >> cnf >> VARNUM >> ClauseNum;
+	fis >> cnf >> VARNUM >> clasuseSize;
 	fis.get();
 
 	HeadNode* HEAD = new HeadNode;
@@ -170,7 +170,7 @@ HeadNode* CreateClause(string fileP, int& VARNUM, int& ClauseNum)
 	HeadNode* headPre = HEAD;
 	HeadNode* headRear = HEAD;
 	HeadNode* END = headRear;
-	for (int i = 0; i < ClauseNum; i++)
+	for (int i = 0; i < clasuseSize; i++)
 	{
 		int temp;
 		fis >> temp;

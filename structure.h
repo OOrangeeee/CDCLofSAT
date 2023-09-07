@@ -10,6 +10,7 @@ using namespace std;
 const int True{ 1 };
 const int False{ -1 };
 const int Unset{ 0 };
+//宏定义函数
 #define SafeDelete(_x)   \
     {                    \
         if (_x)          \
@@ -27,6 +28,7 @@ const int Unset{ 0 };
         }                   \
     }
 #define max(a, b) ((a) > (b) ? (a) : (b))
+//类声明
 class lit;
 class Solver;
 class Clause;
@@ -36,28 +38,51 @@ class lit
 {
 public:
 	int x;
+	/// <summary>
+	/// 使用无参数的生成文字函数，初始化为0
+	/// </summary>
 	lit()
 	{
-		this->x = 0;
+		this->x = 0;//
 	}
+	/// <summary>
+	/// 初始化文字，正数初始化为奇数，负数为偶数，用作索引
+	/// </summary>
+	/// <param name="x"></param>
 	lit(int x)
 	{
 		this->x = (x > 0) ? (2 * x + 1) : (-2 * x);
 	}
+	/// <summary>
+	/// 通过位运算判断符号
+	/// </summary>
+	/// <returns>正返回1，负返回0</returns>
 	bool sign()
-	{ //如果文字>0,则返回1
+	{ 
 		return (this->x) & 1;
 	}
+	/// <summary>
+	/// 得到变元的编号，既绝对值
+	/// </summary>
+	/// <returns>返回变元编号</returns>
 	int var()
-	{ //返回文字对应的基础变量
+	{
 		return (this->x) >> 1;
 	}
+	/// <summary>
+	/// 返回文字的索引，既返回文字初始化时得到的值
+	/// </summary>
+	/// <returns>正数返回2*x+1，负数返回-2*x，x为变元编号</returns>
 	int index()
-	{ //将文字转换为适用于数组索引的“小”整数
+	{ 
 		return this->x;
 	}
+	/// <summary>
+	/// 返回当前文字的负值，既另一个形式
+	/// </summary>
+	/// <returns>返回当前文字的另一个形式</returns>
 	int no()
-	{ // x为奇数-1，x为偶数+1，x为奇数意味着正，x为偶数意味着负
+	{ 
 		return this->x ^ 1;
 	}
 };
@@ -152,8 +177,8 @@ private:
 };
 
 
-//自定义高级队列
-template <class T>
+//自定义高级队列对标std::Queue
+template <class T>//泛型
 class mQueue
 {
 public:
@@ -288,7 +313,7 @@ public:
 struct SearchParams
 {
 	double varDecrease, clause_decay, rand_feq;
-	SearchParams(double v = 1, double c = 1, double r = 0)
+	SearchParams(double v = 1, double c = 1, double r = 0)//初始化结构体用的函数
 	{
 		varDecrease = v;
 		clause_decay = c;
@@ -305,14 +330,19 @@ public:
 	bool learnt = 0;//是否为学习语句
 	double Act = 0;//活跃度
 	mVector<lit> lits;//动态数组做出的文字列表
-	bool operator<(const Clause x)//判断语句的活跃度大小
+	/// <summary>
+	/// 判断当前语句和参数语句的活跃度大小
+	/// </summary>
+	/// <param name="x">被比较语句</param>
+	/// <returns>如果当前小就true，否则false</returns>
+	bool operator<(const Clause x)
 	{
 		return Act < x.Act;
 	}
-	void ReasonForLearn(Solver& S, lit p, mVector<lit>& out_reason);//冲突原因
-	bool GetNewClause(Solver& S, mVector<lit> ps, bool learnt, Clause*& out_clause);//薪资据
-	bool IsClause(Solver S);
-	bool GetCleanInClause(Solver& S);
-	bool GetClauseInfluence(Solver& S, lit p);
-
+	void ReasonForLearn(Solver& S, lit p, mVector<lit>& out_reason);//记录冲突原因
+	bool GetClauseInfluence(Solver& S, lit p);//传播，判断并赋值下一个变元
+	bool IsClause(Solver S);//判断该子句能不能被化简，单子句不化简
+	bool GetNewClause(Solver& S, mVector<lit> ps, bool learnt, Clause*& out_clause);//生成新的学习子句
+	bool MakeClauseMoreCleaner(Solver& S);//化简子句，去掉已赋值变元，仅限第一层
+	
 };

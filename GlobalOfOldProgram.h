@@ -97,7 +97,7 @@ void DeleteList(HeadNode*& LIST);
 /// <param name="ClauseNum">子句数目</param>
 /// <param name="howManyTimes">出现了多少次</param>
 /// <returns>返回头节点的第一个</returns>
-HeadNode* CreateClause(string& fileP, int& VARNUM, int& ClauseNum, howMany*& howManyTimes);
+HeadNode* CreateClause(string& fileP, int& VARNUM, int& clauseNum, howMany*& howManyTimes);
 
 /// <summary>
 /// 读取文件的重载形式，用于无需计算出现多少次的读取情况
@@ -106,7 +106,7 @@ HeadNode* CreateClause(string& fileP, int& VARNUM, int& ClauseNum, howMany*& how
 /// <param name="VARNUM">文字数目</param>
 /// <param name="ClauseNum">子句数目</param>
 /// <returns>返回头节点的第一个</returns>
-HeadNode* CreateClause(string fileP, int& VARNUM, int& ClauseNum);
+HeadNode* CreateClause(string fileP, int& VARNUM, int& clauseNum);
 
 /// <summary>
 /// DPLL

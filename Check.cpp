@@ -31,8 +31,8 @@ int CheckCNFandRES(string CNFpath, string RESpath)
 	RESout.get();
 	RESout.get();
 	int VARNUM{ 0 };
-	int ClauseNum{ 0 };
-	HeadNode* list = CreateClause(CNFpath, VARNUM, ClauseNum);
+	int clauseNum{ 0 };
+	HeadNode* list = CreateClause(CNFpath, VARNUM, clauseNum);
 	int* RES = new int[VARNUM + 1];
 	int num{ 1 };
 	int k{ 0 };
@@ -58,7 +58,7 @@ int CheckCNFandRES(string CNFpath, string RESpath)
 	}
 	HeadNode* lP = list;
 	int isRight{ 0 };
-	for (int i{ 1 }; i <= ClauseNum && lP; i++, lP = lP->down)
+	for (int i{ 1 }; i <= clauseNum && lP; i++, lP = lP->down)
 	{
 		isRight = 0;
 		DataNode* dP = lP->right;

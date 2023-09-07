@@ -13,23 +13,23 @@ class Solver
 {
 	friend Clause;
 public:
-	Clause** clauses;//子句列表
-	int ClauseNum{ 0 };
-	mQueue<Clause*> learns;  //由冲突分析得来的用于学习的子句列表
-	double clauseIncrease{ 1 };       //子句活跃度增量
-	double clauseDecrease{ -1 };     //子句活跃的衰减量
-	int VARNUM{ -1 };           //文字数量
-	int clauseNum{ -1 };            //子句数量
-	double* Act;     //通过启发式方法来衡量变量活跃度
-	double varIncrease{ 1 };   //变量活跃度的增加因子
-	double varDecrease{ 1 }; //变量活跃度的衰减因子
-	mQueue<Clause*>* GetCheck; //每个文字被观察的约束列表
-	mQueue<lit> queueForChuanBo;         //传播队列
-	char* fuHao;          //按变量索引的当前分配
-	mVector<lit> timeInList;     //按时间顺序排列的分配列表
-	mVector<int> timeInLiseF; //在“追踪记录”中用于区分不同决策层级的分隔符索引
-	Clause** reasonForFalse;       //冲突原因
-	int* level;            //每个变量被赋值的决策层级
+	Clause** clauses;//初始子句列表
+	int ClauseNum{ 0 };//初始子句数目
+	mQueue<Clause*> learns;//由冲突分析得来的用于学习的子句列表
+	double clauseIncrease{ 1 };//子句活跃度增量
+	double clauseDecrease{ -1 };//子句活跃的衰减量
+	int VARNUM{ -1 };//文字数量
+	int clauseNum{ -1 };//子句数量
+	double* Act;//通过启发式方法来衡量变量活跃度
+	double varIncrease{ 1 };//变量活跃度的增加因子
+	double varDecrease{ 1 };//变量活跃度的衰减因子
+	mQueue<Clause*>* getWatch;//观察每个变元的子句
+	mQueue<lit> queueForChuanBo;//传播队列，储存了下一个被复制的变元
+	char* fuHao;//目前对于变元的赋值
+	mVector<lit> timeInList;//按时间顺序排列的赋值列表
+	mVector<int> timeInLiseF; //每一决策层的赋值数
+	Clause** reasonForFalse;//推断出每个变元真值的原因子句
+	int* level;//现在的决策层数
 	int rootLevel{ 0 };
 	int* result;//定义结果
 	int resultSize{ 0 };
@@ -51,6 +51,7 @@ public:
 	{
 		return learns.size();
 	}
+	//返回当前决策层
 	int getDlevel()
 	{
 		return timeInLiseF.size();
@@ -58,41 +59,29 @@ public:
 	//传播化简函数
 	Clause* Influence()
 	{
-		// 当队列不为空时，循环继续
 		while (!queueForChuanBo.empty())
 		{
-			// 从队列的前端获取元素，赋值给'p'
 			lit p = queueForChuanBo.front();
 			queueForChuanBo.pop();
-
-			// 创建临时队列'tmp'
 			mQueue<Clause*> tmp;
-
-			// 当子队列不为空时，循环继续
-			while (!GetCheck[p.x].empty())//取出所有观测队列中的值
+			while (!getWatch[p.x].empty())
 			{
-				// 从的子队列前端获取元素，赋值给't'
-				Clause* t = GetCheck[p.x].front();
+				Clause* t = getWatch[p.x].front();
 				tmp.push_back(t);
-				GetCheck[p.x].pop();
+				getWatch[p.x].pop();
 			}
-
-			// 对新的队列'tmp'进行处理
 			while (!tmp.empty())
 			{
-				// 从'tmp'队列前端获取元素，赋值给'c'
 				Clause* c = tmp.front();
 				tmp.pop();
 
 				if ((*c).GetClauseInfluence(*this, p) == 0)
 				{
-					// 当'tmp'队列不为空时，循环继续
 					while (!tmp.empty())
 					{
-						// 从'tmp'队列前端获取元素，赋值给'cl'
 						Clause* cl = tmp.front();
 						tmp.pop();
-						GetCheck[p.x].push_back(cl);
+						getWatch[p.x].push_back(cl);
 					}
 					while (!queueForChuanBo.empty())
 						queueForChuanBo.pop();
@@ -105,7 +94,6 @@ public:
 
 	bool Enqueue(lit p, Clause* from)
 	{
-		// 如果'p'的变量已经被赋值
 		if (this->fuHao[p.var()] != Unset)
 		{
 			int opt;
@@ -280,7 +268,7 @@ public:
 		// 主循环开始
 		while (1)
 		{
-			Clause* confl = Influence();
+			Clause* confl = Influence();//单子句传播
 			// 如果存在冲突子句
 			if (confl)
 			{
@@ -542,10 +530,10 @@ public:
 
 		int j = 0;
 		// 对每一个学习到的子句进行化简
-		for (int i = 0; i < learns.size(); i++)
+		for (int i = 0; i < learns.size(); i++)//????????????????????????????????????????????????????????????
 		{
 			// 如果子句可以被化简，则跳过
-			if ((*cs[i]).GetCleanInClause(*this))
+			if ((*cs[i]).MakeClauseMoreCleaner(*this))
 			{
 
 			}
@@ -564,7 +552,7 @@ public:
 		for (int i = 0; i < ClauseNum; i++)
 		{
 			// 如果子句可以被化简，则跳过
-			if ((*clauses[i]).GetCleanInClause(*this))
+			if ((*clauses[i]).MakeClauseMoreCleaner(*this))
 			{
 
 			}
@@ -585,16 +573,13 @@ public:
 		// 初始化搜索参数，包括文字和子句的衰变参数
 		SearchParams params(0.95, 0.999);
 
-		// 初始化冲突参数，这个参数可用于指导搜索过程
-		double nof_conflicts = 100;
+		// 冲突子句数量上限
+		double nof_conflicts{ 100 };
 
-		// 初始化学习参数，一开始设置为约束子句数量的1/3
-		double nof_learnts = ClauseNum / 3;
+		//  学习子句数量上限
+		double nof_learnts = { ClauseNum / 3.0 };
 
-		// 初始化求解状态为未设定（Unset）
-		int status = Unset;
-
-		// 获取当前的决策层级，并设置为根层级
+		int status{ Unset };
 		rootLevel = getDlevel();
 
 		// 如果在顶层就存在冲突，表示无解
@@ -613,7 +598,7 @@ public:
 			// 在搜索过程中，会更新求解状态
 			status = FindAns((int)nof_conflicts, (int)nof_learnts, params);
 
-			// 每次搜索完毕后，都会调整冲突参数和学习参数，以指导下一次的搜索，把速度交给天意！！！！
+			// 每次搜索完毕后，都会调整冲突子句数量上限和学习子句数量上限
 			nof_learnts *= 1.1;
 			nof_conflicts *= 1.5;
 		}
@@ -628,8 +613,8 @@ public:
 	int Read(char filename[])
 	{
 		// 打开文件
-		FILE* f;
-		char s[200];
+		FILE* f;//文件指针
+		char s[200];//字符串
 		int k = 0, j = 0;
 		if ((f = fopen(filename, "rb")) == NULL) // 如果文件打开失败，则返回错误
 		{
@@ -658,17 +643,17 @@ public:
 		clauseNum = k;
 
 		// 初始化数据结构
-		Act = (double*)malloc((VARNUM * 2 + 2) * sizeof(double));
-		fuHao = (char*)malloc((VARNUM + 1) * sizeof(char)); // 分配
-		reasonForFalse = (Clause**)malloc((VARNUM + 1) * sizeof(Clause*)); // 冲突原因
-		level = (int*)malloc((VARNUM + 1) * (sizeof(int)));
-		GetCheck = (mQueue<Clause*>*)malloc((2 * VARNUM + 2) * sizeof(mQueue<Clause*>)); // 观察队列
-		result = (int*)malloc((VARNUM + 1) * sizeof(int));
-		clauses = (Clause**)malloc(clauseNum * sizeof(Clause*));
+		Act = (double*)malloc((VARNUM * 2 + 2) * sizeof(double));//变元活跃度
+		fuHao = (char*)malloc((VARNUM + 1) * sizeof(char));//当前变元赋值情况
+		reasonForFalse = (Clause**)malloc((VARNUM + 1) * sizeof(Clause*));//冲突原因子句列表
+		level = (int*)malloc((VARNUM + 1) * (sizeof(int)));//每个变元的决策层
+		getWatch = (mQueue<Clause*>*)malloc((2 * VARNUM + 2) * sizeof(mQueue<Clause*>));//涨缩数据结构中的观察队列，每个元素都是子句指针队列
+		result = (int*)malloc((VARNUM + 1) * sizeof(int));//答案
+		clauses = (Clause**)malloc(clauseNum * sizeof(Clause*));//子句列表
 
 		// 初始化观察队列
 		for (int i = 0; i < 2 * VARNUM + 2; i++)
-			GetCheck[i] = mQueue<Clause*>();
+			getWatch[i] = mQueue<Clause*>();
 
 		// 初始化活跃度数组和各项回溯指标
 		for (int i = 0; i < VARNUM * 2 + 2; i++)
@@ -692,6 +677,7 @@ public:
 				if (tmp == 0)
 					break;
 				V->lits.push_back(lit(tmp));
+				//int x = lit(tmp).no();
 				Act[lit(tmp).no()] += varIncrease;
 			}
 			clauses[i] = V; // 子句入表
@@ -703,8 +689,10 @@ public:
 		{
 			if (clauses[i]->lits.size() > 1)
 			{
-				GetCheck[clauses[i]->lits[0].no()].push_back(clauses[i]);
-				GetCheck[clauses[i]->lits[1].no()].push_back(clauses[i]);
+				int x = clauses[i]->lits[0].no();
+				int y = clauses[i]->lits[1].no();
+				getWatch[clauses[i]->lits[0].no()].push_back(clauses[i]);
+				getWatch[clauses[i]->lits[1].no()].push_back(clauses[i]);
 			}
 			else
 			{
@@ -816,8 +804,8 @@ bool Clause::GetNewClause(Solver& S, mVector<lit> ps, bool learnt, Clause*& out_
 				S.GetVARinAct(tmp);
 			}
 		}
-		S.GetCheck[(c->lits[0]).no()].push_back(c);
-		S.GetCheck[(c->lits[1]).no()].push_back(c);
+		S.getWatch[(c->lits[0]).no()].push_back(c);
+		S.getWatch[(c->lits[1]).no()].push_back(c);
 		out_clause = c;
 		return 1;
 	}
@@ -829,7 +817,7 @@ bool Clause::IsClause(Solver S)
 	return S.reasonForFalse[this->lits[0].var()] == this;
 }
 //删除所有未被赋值的语句
-bool Clause::GetCleanInClause(Solver& S)
+bool Clause::MakeClauseMoreCleaner(Solver& S)
 {
 	int j = 0;
 	for (int i = 0; i < lits.size(); i++)
@@ -868,7 +856,7 @@ bool Clause::GetClauseInfluence(Solver& S, lit p)
 		opt = False;
 	if (S.fuHao[lits[0].var()] == opt)
 	{
-		S.GetCheck[p.x].push_back(this);
+		S.getWatch[p.x].push_back(this);
 		return true;
 	}
 	//寻找新的文字来观察
@@ -883,12 +871,12 @@ bool Clause::GetClauseInfluence(Solver& S, lit p)
 			int tm = lits[1].x;
 			lits[1].x = lits[i].x;
 			lits[i].x = tm;
-			S.GetCheck[lits[1].no()].push_back(this);
+			S.getWatch[lits[1].no()].push_back(this);
 			return 1;
 		}
 	}
 	//子句在当前赋值下为单元子句
-	S.GetCheck[p.x].push_back(this);
+	S.getWatch[p.x].push_back(this);
 	return S.Enqueue(lits[0], this);
 }
 
