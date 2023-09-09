@@ -36,6 +36,10 @@ class Clause;
 //文字类
 class lit
 {
+	friend Clause;
+
+	friend Solver;
+
 public:
 	int x;
 	/// <summary>
@@ -58,7 +62,7 @@ public:
 	/// </summary>
 	/// <returns>正返回1，负返回0</returns>
 	bool sign()
-	{ 
+	{
 		return (this->x) & 1;
 	}
 	/// <summary>
@@ -74,7 +78,7 @@ public:
 	/// </summary>
 	/// <returns>正数返回2*x+1，负数返回-2*x，x为变元编号</returns>
 	int index()
-	{ 
+	{
 		return this->x;
 	}
 	/// <summary>
@@ -82,7 +86,7 @@ public:
 	/// </summary>
 	/// <returns>返回当前文字的另一个形式</returns>
 	int no()
-	{ 
+	{
 		return this->x ^ 1;
 	}
 };
@@ -323,7 +327,12 @@ public:
 //子句
 class Clause
 {
-public:
+
+	friend lit;
+
+	friend Solver;
+
+protected:
 	bool learnt = 0;//是否为学习语句
 	double Act = 0;//活跃度
 	mVector<lit> lits;//动态数组做出的文字列表
