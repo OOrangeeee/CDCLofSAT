@@ -513,6 +513,19 @@ int main(void)
 			getchar();
 			getchar();
 		}
+		else if (choice == 1024)
+		{
+			system("cls");
+			SetColor(5);
+			cout << " 10      101010   10      10  101010  101010  101010 " << endl;
+			cout << " 10     10    10   10    10   10      10      10 " << endl;
+			cout << " 10     10    10    10  10    101010  10        10 " << endl;
+			cout << " 10     10    10     1010     10      10          10 " << endl;
+			cout << " 101010  101010       10      101010  101010  101010 " << endl;
+			SetColor(7);
+			getchar();
+			getchar();
+		}
 		else if (choice == 0)//退出程序
 		{
 			break;
