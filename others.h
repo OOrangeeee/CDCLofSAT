@@ -46,7 +46,7 @@ string createBackup(char originalFile[]);
 /// <param name="filePath">.res文件路径</param>
 void ShowTheRes(char filePath[]);
 
-//普通熟读
+//普通数独
 
 /// <summary>
 /// 创建普通数独到文件

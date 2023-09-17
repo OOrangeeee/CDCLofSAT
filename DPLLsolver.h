@@ -35,7 +35,7 @@ private:
 	mVector<int> timeInLiseF; //迹中不同决策级别的分隔符索引，也就是每个决策点在迹的哪个位置
 	Clause** reasonForFalse;//推断出每个变元真值的原因子句，也就是迹中的变元赋值原因
 	int* level;//现在的决策层数
-	int rootLevel{ 0 };
+	int rootLevel{ 0 };//根决策层
 	int* result;//定义结果
 	int resultSize{ 0 };
 
@@ -198,7 +198,7 @@ private:
 	/// <summary>
 	/// 根据queueForChuanBo队列中的值对变元进行赋值，并根据该变元赋值化简子句，寻找冲突
 	/// </summary>
-	/// <returns>返回当前决策层</returns>
+	/// <returns>冲突语句</returns>
 	Clause* Influence()
 	{
 		//运行到全部待赋值变元都被赋值
@@ -315,8 +315,6 @@ public:
 		{
 			if (clauses[i]->lits.size() > 1)
 			{
-				int x = clauses[i]->lits[0].no();
-				int y = clauses[i]->lits[1].no();
 				getWatch[clauses[i]->lits[0].no()].push_back(clauses[i]);
 				getWatch[clauses[i]->lits[1].no()].push_back(clauses[i]);
 			}

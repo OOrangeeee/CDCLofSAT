@@ -361,8 +361,8 @@ int main(void)
 				SetColor(11);
 				cout << "请输入数独(请务必按照数独格式一行一行输入！输入完毕程序会判断答案是否正确！)：\n";
 				SetColor(7);
-				for (int i{ 0 }; i < ROW; i++)
-					for (int j{ 0 }; j < COL; j++)
+				for (int i{ 0 }; i < 9; i++)
+					for (int j{ 0 }; j < 9; j++)
 						cin >> ans[i][j];
 				string UserAns = UserAnsSudo(ans, filename);
 				int isRight = CheckCNFandRES(filename, UserAns);

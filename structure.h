@@ -76,7 +76,7 @@ public:
 	/// <summary>
 	/// 返回文字的索引，既返回文字初始化时得到的值
 	/// </summary>
-	/// <returns>正数返回2*x+1，负数返回-2*x，x为变元编号</returns>
+	/// <returns>正数返回2*a+1，负数返回-2*a，a为变元编号</returns>
 	int index()
 	{
 		return this->x;
@@ -333,8 +333,8 @@ class Clause
 	friend Solver;
 
 protected:
-	bool learnt = 0;//是否为学习语句
-	double Act = 0;//活跃度
+	bool learnt{ 0 };//是否为学习语句
+	double Act{ 0 };//活跃度
 	mVector<lit> lits;//动态数组做出的文字列表
 	/// <summary>
 	/// 判断当前语句和参数语句的活跃度大小

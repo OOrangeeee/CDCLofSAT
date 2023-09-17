@@ -95,7 +95,7 @@ string UserAnsSudo(int ans[][COL], string filename)
 	filename.erase(filename.size() - 9);
 	filename += "User.res";
 	ofstream in(filename);
-	int temp[999] = { 0 };
+	int temp[1000] = { 0 };
 	for (int i{ 0 }; i < ROW; i++)
 		for (int j{ 0 }; j < COL; j++)
 			temp[ans[i][j] + (i + 1) * 100 + (j + 1) * 10] = 1;
@@ -116,7 +116,7 @@ string UserAnsHanidoku(int ans[][COL], string filename)
 	filename.erase(filename.size() - 12);
 	filename += "HanidokuUser.res";
 	ofstream in(filename);
-	int temp[999] = { 0 };
+	int temp[1000] = { 0 };
 	for (int i{ 0 }; i < ROW; i++)
 		for (int j{ 0 }; j <= 8 - abs(i - 4); j++)
 			temp[ans[i][j] + (i + 1) * 100 + (j + 1) * 10] = 1;
